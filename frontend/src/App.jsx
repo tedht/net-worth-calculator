@@ -15,68 +15,68 @@ import Search from "./pages/search/Search";
 import Error from "./pages/error/Error";
 
 const theme = createTheme({
-  typography: {
-    h1: {
-      fontFamily: "roboto",
-      fontWeight: "bold",
-      fontSize: "36px",
-    },
-    h2: {
-      fontFamily: "roboto",
-      fontWeight: "bold",
-      fontSize: "24px",
-    },
-    subtitle1: {
-      fontFamily: "roboto",
-      fontWeight: "medium",
-      fontSize: "20px",
-    },
-    body1: {
-      fontFamily: "roboto",
-      fontWeight: "medium",
-      fontSize: "16px",
-    },
-    button: {
-      fontFamily: "roboto",
-      fontWeight: "bold",
-      fontSize: "12px",
-    },
-  },
+	typography: {
+		h1: {
+			fontFamily: "roboto",
+			fontWeight: "bold",
+			fontSize: "36px",
+		},
+		h2: {
+			fontFamily: "roboto",
+			fontWeight: "bold",
+			fontSize: "24px",
+		},
+		subtitle1: {
+			fontFamily: "roboto",
+			fontWeight: "medium",
+			fontSize: "20px",
+		},
+		body1: {
+			fontFamily: "roboto",
+			fontWeight: "medium",
+			fontSize: "16px",
+		},
+		button: {
+			fontFamily: "roboto",
+			fontWeight: "bold",
+			fontSize: "12px",
+		},
+	},
 })
 
 function App() {
-  const [user, setUser] = useState();
-  const [entries, setEntries] = useState([]);
+	const [user, setUser] = useState();
+	const [entries, setEntries] = useState([]);
 
-  const [queryClient] = useState(() => new QueryClient());
-  const globalContextValue = useMemo(() => {
-    return {
-      user,
-      setUser,
-      entries,
-      setEntries,
-    };
-  }, [user, entries]);
+	const [queryClient] = useState(() => new QueryClient());
+	const globalContextValue = useMemo(() => {
+		return {
+			user,
+			setUser,
+			entries,
+			setEntries,
+		};
+	}, [user, entries]);
 
-  return (
-    <BrowserRouter>
-    <GlobalContext.Provider value={globalContextValue}>
-    <QueryClientProvider client={queryClient}>
-    <ThemeProvider theme={theme}>
-      <Nav />
-      <Box sx={{p: 2}}>
-        <Routes>
-          <Route path="/" element={<Homepage />}/>
-          <Route path="/stats" element={<Stats />}/>
-          <Route path="/search" element={<Search />}/>
-          <Route path="*" element={<Error />}/>
-        </Routes>
-      </Box>
-    </ThemeProvider> 
-    </QueryClientProvider> 
-    </GlobalContext.Provider>
-    </BrowserRouter>
-  );
+	return (
+		<BrowserRouter>
+		<GlobalContext.Provider value={globalContextValue}>
+		<QueryClientProvider client={queryClient}>
+		<ThemeProvider theme={theme}>
+			<Nav />
+			<Box sx={{p: 2}}>
+				<Routes>
+					<Route path="/" element={<Homepage />}/>
+					<Route path="/stats" element={<Stats />}/>
+					<Route path="/search" element={<Search />}/>
+					<Route path="*" element={<Error />}/>
+				</Routes>
+			</Box>
+		</ThemeProvider> 
+		</QueryClientProvider> 
+		</GlobalContext.Provider>
+		</BrowserRouter>
+	);
 }
 
 export default App
