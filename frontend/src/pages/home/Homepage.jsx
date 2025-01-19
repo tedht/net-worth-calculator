@@ -3,8 +3,6 @@ import { Grid, Box, Typography } from "@mui/material";
 import ProfileCard from './components/cards/ProfileCard';
 import AssetCard from './components/cards/AssetCard';
 import LiabilityCard from './components/cards/LiabilityCard';
-import LoginModal from './components/auth/LoginModal';
-import CreateAccountModal from './components/auth/CreateAccountModal';
 import AddEntryModal from './components/entries/modal/AddEntryModal';
 import GlobalContext from '../../share/context/GlobalContext';
 import Cookies from 'js-cookie';
@@ -12,20 +10,11 @@ import Axios from '../../share/AxiosInstance';
 import { useQuery } from 'react-query';
 
 
-function Homepage() {
+const Homepage = () => {
 	const { entries, setEntries, user } = useContext(GlobalContext);
-
-	const [openLoginModal, setOpenLoginModal] = useState(false);
-	const [openCreateAccountModal, setOpenCreateAccountModal] = useState(false);
 	const [label, setLabel] = useState('');
 	const [openAddEntryModal, setOpenAddEntryModal] = useState(false);
 	const [startFetch, setStartFetch] = useState(false);
-
-	const handleOpenLogin = () => setOpenLoginModal(true);
-	const handleCloseLogin = () => setOpenLoginModal(false);
-
-	const handleOpenCreateAccount = () => setOpenCreateAccountModal(true);
-	const handleCloseCreateAccount = () => setOpenCreateAccountModal(false);
 
 	const handleOpenAddEntry = () => setOpenAddEntryModal(true);
 	const handleCloseAddEntry = () => setOpenAddEntryModal(false);
@@ -69,49 +58,42 @@ function Homepage() {
 
 	return (
 		<>
-		<LoginModal
-			open={openLoginModal} 
-			handleCloseLogin={handleCloseLogin} 
-			handleOpenCreateAccount={handleOpenCreateAccount}/>
-		<CreateAccountModal
-			open={openCreateAccountModal} 
-			handleCloseCreateAccount={handleCloseCreateAccount}
-			handleOpenLogin={handleOpenLogin}/>
 		<AddEntryModal
 			open={openAddEntryModal}
 			handleCloseAddEntry={handleCloseAddEntry} 
 			label={label}/>
+
+		{/* <Typography variant='h1'>Title 1</Typography>
+		<Typography variant='h2'>Title 2</Typography>
+		<Typography variant='subtitle'>Subtitle</Typography>
+		<Typography variant='body1'>Body 1</Typography>
+		<Typography variant='button'>button</Typography> */}
+			
 		<Grid container spacing={2} direction={"row"}>
-			<Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center'}}>
+			<Grid item xs={12}>
 				<Typography variant='h1'>Home</Typography>
 			</Grid>
-
-			<Grid item lg={1} display={{ xs: 'none', lg: 'block'}}/>
-
-			<Grid item lg={4} md={5} xs={12}>
+ 
+			{/*<Grid item lg={4} md={5} xs={12}>
 				<ProfileCard 
-					handleOpenLogin={handleOpenLogin} 
-					handleOpenCreateAccount={handleOpenCreateAccount}
+					handleOpenLogin={()=>{}} 
+					handleOpenCreateAccount={()=>{}}
 					calculateNetworth={calculateNetworth}/>
+			</Grid> */}
+			
+			<Grid item lg={6} xs={12}>
+				<AssetCard 
+					handleOpenAddEntry={handleOpenAddEntry} 
+					setLabel={setLabel}
+				/>
 			</Grid>
-			
-			<Grid item lg={6} md={7} xs={12}>
-				<Box sx={{ mb: 2}}>
-					<AssetCard 
-						handleOpenAddEntry={handleOpenAddEntry} 
-						setLabel={setLabel}/>
-				</Box>
-				<Box> 
-					<LiabilityCard 
-						handleOpenAddEntry={handleOpenAddEntry} 
-						setLabel={setLabel}/>
-				</Box>
+
+			<Grid item lg={6} xs={12}>
+				<LiabilityCard 
+					handleOpenAddEntry={handleOpenAddEntry} 
+					setLabel={setLabel}
+				/>
 			</Grid>
-			
-			
-
-			<Grid item lg={1} display={{ xs: 'none', lg: 'block'}}/>
-
 		</Grid>
 		</>
 	);

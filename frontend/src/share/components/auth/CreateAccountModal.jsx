@@ -1,10 +1,10 @@
 import { useState, useContext } from "react";
 import { Modal, Card, CardContent, Box, Typography, IconButton, TextField, Button, Checkbox, FormControl, FormHelperText } from "@mui/material";
-import GlobalContext from "../../../../share/context/GlobalContext";
+import GlobalContext from '../../context/GlobalContext';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 import { useMutation } from 'react-query';
-import Axios from "../../../../share/AxiosInstance";
+import Axios from "../../AxiosInstance";
 
 import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -18,7 +18,6 @@ const modalCardStyle = {
 	left: '50%',
 	transform: 'translate(-50%, 0%)',
 	width: { xs: '90%', md: '60%'},
-	// height: '90%',
 	background: '#F5F5F5',
 	border: 2,
 	borderRadius: 9,

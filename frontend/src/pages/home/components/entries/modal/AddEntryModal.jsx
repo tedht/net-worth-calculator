@@ -89,17 +89,17 @@ function AddEntryModal({ open = false, handleCloseAddEntry = () => {}, label = '
 	}, [label]);
 
 	const handleSubmit = async () => {
-		if(!validateForm())return;
+		if(!validateForm()) return;
 		addMutation.mutate();
 	};
 	
 	const validateForm = () => {
 		const error = {};
-		if (!newEntry.name) error.name = 'Entry name is required';
-		if (!newEntry.value && newEntry!=='0') error.value = 'Value is required';
-		else if (!/^[0-9]*$/g.test(newEntry.value)) error.value = 'Invalid value';
-		if (!newEntry.category) error.category = 'Category is required';
-		if (!newEntry.label) error.label = 'Label is required';
+		if (!newEntry.name)                         error.name     = 'Entry name is required';
+		if (!newEntry.value && newEntry!=='0')      error.value    = 'Value is required';
+		else if (!/^[0-9]*$/g.test(newEntry.value)) error.value    = 'Invalid value';
+		if (!newEntry.category)                     error.category = 'Category is required';
+		if (!newEntry.label)                        error.label    = 'Label is required';
 		setError(error);
 
 		if (Object.keys(error).length) return false;

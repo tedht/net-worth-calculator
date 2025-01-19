@@ -1,10 +1,10 @@
 import { useState, useContext } from "react";
 import { Modal, Card, CardContent, Box, Typography, IconButton, TextField, Button } from "@mui/material";
-import GlobalContext from "../../../../share/context/GlobalContext";
+import GlobalContext from '../../context/GlobalContext';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 import { useMutation } from 'react-query';
-import Axios from "../../../../share/AxiosInstance";
+import Axios from "../../AxiosInstance";
 
 const modalCardStyle = {
 	position: 'absolute',

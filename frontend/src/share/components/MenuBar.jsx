@@ -47,12 +47,15 @@ function MenuBar({ open = false, handleCloseMenuBar = () => {} }){
 						display: 'flex', 
 						justifyContent: 'space-between',
 						m: 0}}>
+							
 					<IconButton onClick={handleCloseMenuBar}>
 						<MenuIcon sx={{ color: "#FFFFFF", fontSize: '180%' }}/>
 					</IconButton>
+
 					<IconButton onClick={handleCloseMenuBar}>
 						<CloseRoundedIcon sx={exitButtonStyle} />
 					</IconButton>
+
 					</Toolbar>
 				</AppBar>
 				<Button 

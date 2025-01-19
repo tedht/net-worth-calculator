@@ -3,6 +3,7 @@ import { Box, Card, CardContent, Typography, IconButton } from "@mui/material";
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import Entry from "../entries/Entry";
 import GlobalContext from "../../../../share/context/GlobalContext";
+import { useTheme } from "@mui/material/styles";
 
 const cardStyle = {
 	border: 2,
@@ -22,13 +23,14 @@ const iconButtonStyle = {
 
 function AssetCard({handleOpenAddEntry = () => {}, setLabel = () => {}}) {
 	const { entries, user } = useContext(GlobalContext);
+	const theme = useTheme();
 
 	return (
 		<Card sx={cardStyle}>
 			<CardContent sx={{
 							p: 0,
 							m: 0}}>
-				<Box borderBottom={2} sx={{ bgcolor: '#53E473' }}>
+				<Box borderBottom={2} sx={{ bgcolor: theme.palette.custom.asset }}>
 					<Typography variant="h1" sx={{ ml: '20px' }}>
 						Assets
 					</Typography>
@@ -36,7 +38,12 @@ function AssetCard({handleOpenAddEntry = () => {}, setLabel = () => {}}) {
 				{entries.map((entry, index) => (entry.label === 'asset') && 
 				(<Entry key={index} entry={entry} setLabel={setLabel}/>))}
 				<Box sx={{ display: 'flex', justifyContent: 'center', my: 3}}>
-					{(user) && (<IconButton 
+					{/* {(user) && (<IconButton 
+						sx={{ p: 0 }}
+						onClick={() => {setLabel('asset'); handleOpenAddEntry()}}>
+						<AddCircleOutlineRoundedIcon sx={iconButtonStyle}/>
+					</IconButton>)} */}
+					{(<IconButton 
 						sx={{ p: 0 }}
 						onClick={() => {setLabel('asset'); handleOpenAddEntry()}}>
 						<AddCircleOutlineRoundedIcon sx={iconButtonStyle}/>

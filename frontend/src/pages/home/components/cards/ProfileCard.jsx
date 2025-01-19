@@ -46,9 +46,9 @@ const createAccountButtonStyle = {
 }
 
 function ProfileCard({ 
-	handleOpenLogin = () => {}, 
+	handleOpenLogin         = () => {}, 
 	handleOpenCreateAccount = () => {}, 
-	calculateNetworth = () => {} 
+	calculateNetworth       = () => {} 
 }) {
 	const [netWorth, setNetWorth] = useState(0);
 	const { entries, user } = useContext(GlobalContext);
@@ -85,12 +85,12 @@ function ProfileCard({
 		<Card sx={profileCardStyle}>
 			<CardContent>
 				<Box sx={{
-							display: 'flex',
-							alignItems: 'center',
-							justifyContent: 'center',
-							textAlign: 'center',
-							p: 1,
-							m: 1,}}>
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					textAlign: 'center',
+					p: 1,
+					m: 1,}}>
 						<AccountCircleIcon sx={{color: 'black', fontSize: '1200%'}}/>
 				</Box>
 				{(user) ?
