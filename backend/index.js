@@ -1,15 +1,12 @@
-const express = require("express");
-const app = express();
-
-const cors = require("cors");
-
-const mysql = require("mysql2");
-const bodyParser = require("body-parser");
-const bcrypt = require("bcrypt");
-
-var jwt = require("jsonwebtoken");
-
+const express      = require("express");
+const cors         = require("cors");
+const mysql        = require("mysql2");
+const bodyParser   = require("body-parser");
+const bcrypt       = require("bcrypt");
+const jwt          = require("jsonwebtoken");
 const cookieParser = require('cookie-parser');
+
+const app = express();
 app.use(cookieParser());
 
 const port = 3000;

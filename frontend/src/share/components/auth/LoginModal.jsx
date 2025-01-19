@@ -71,7 +71,7 @@ function LoginModal({ open = false, handleCloseLogin = () => {}, handleOpenCreat
 	const { setUser } = useContext(GlobalContext);
 
 	const loginMutation = useMutation(() =>
-	Axios.post('/login',	{
+	Axios.post('/login', {
 		email,
 		password,
 	}),

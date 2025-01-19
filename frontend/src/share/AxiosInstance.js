@@ -1,4 +1,6 @@
 import axios from 'axios';
-
-const Axios = axios.create({ baseURL: 'http://localhost:3000', withCredentials: true });
+// backend
+// const Axios = axios.create({ baseURL: 'http://localhost:3000', withCredentials: true });
+// using json server
+const Axios = axios.create({ baseURL: 'http://localhost:5000', withCredentials: false });
 export default Axios;

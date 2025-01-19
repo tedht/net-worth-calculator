@@ -160,7 +160,8 @@ function CreateAccountModal({
 	};
 
 	const createAccountMutation = useMutation(() =>
-		Axios.post('/register', {
+		// Axios.post('/register', {
+		Axios.post('/users', {
 			firstname,
 			lastname,
 			dateOfBirth,
@@ -172,12 +173,15 @@ function CreateAccountModal({
 				if(data.data.success){
 					resetAndClose();
 					handleOpenLogin();
-				} else if(data.data.error.substring(0,15) === "Duplicate entry"){
+				} else if(data.data.error && data.data.error.substring(0,15) === "Duplicate entry"){
 					setEmailError('Email has already been used')
 				}
 			},
 			onError: (error) => {
 				console.log(error);
+				if (error.response) {
+					console.error(error.response.data);
+				}
 				setPassword('');
 				setRePassword('');
 			},
