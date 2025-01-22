@@ -4,3 +4,5 @@ import axios from 'axios';
 // using json server
 const Axios = axios.create({ baseURL: 'http://localhost:5000', withCredentials: false });
 export default Axios;
+
+// json-server --watch db.json --port 5000                                                              

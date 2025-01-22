@@ -159,14 +159,19 @@ function CreateAccountModal({
 		return isValid;
 	};
 
+	const handleError = (data) => {
+		console.log("error");
+		console.log(data);
+	}
+
 	const createAccountMutation = useMutation(() =>
-		// Axios.post('/register', {
 		Axios.post('/users', {
 			firstname,
 			lastname,
 			dateOfBirth,
 			email,
 			password,
+			hgjh
 		}),
 		{
 			onSuccess: (data) =>{
@@ -175,6 +180,8 @@ function CreateAccountModal({
 					handleOpenLogin();
 				} else if(data.data.error && data.data.error.substring(0,15) === "Duplicate entry"){
 					setEmailError('Email has already been used')
+				} else {
+					handleError(data);
 				}
 			},
 			onError: (error) => {

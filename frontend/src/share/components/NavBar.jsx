@@ -36,7 +36,7 @@ const NavBar = () => {
 	const handleLogout = () => {
 		setUser();
 		setEntries([]);
-		Cookies.remove('UserToken');
+		//Cookies.remove('UserToken');
 	};
 
 	const fetchUser = async () => {
@@ -139,7 +139,7 @@ const NavBar = () => {
 				<Button startIcon={<LoginIcon />} onClick={handleOpenLogin} color="inherit" sx={{ display: { xs: 'none', lg: 'flex' } }}> 
 					Login
 				</Button>
-				<IconButton onClick={handleOpenMenuBar} sx={{ display: { xs: 'block', lg: 'none' } }}>
+				<IconButton onClick={handleLogout} sx={{ display: { xs: 'block', lg: 'none' } }}>
 					<LoginIcon sx={{ color: theme.palette.contrastText.main }} />
 				</IconButton>
 				</>
