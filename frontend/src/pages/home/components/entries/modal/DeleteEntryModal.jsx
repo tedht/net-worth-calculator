@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from "react";
 import { Modal, Card, CardContent, Box, Typography, IconButton, Button } from "@mui/material";
-import GlobalContext from "../../../../../share/context/GlobalContext";
+import GlobalContext from "../../../../../share/GlobalContext";
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 import { useMutation } from "react-query";

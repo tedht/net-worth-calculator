@@ -4,7 +4,7 @@ import {
 	Button, Select, MenuItem, InputLabel, FormControl, FormHelperText ,
 	OutlinedInput, InputAdornment
 } from "@mui/material";
-import GlobalContext from "../../../../../share/context/GlobalContext";
+import GlobalContext from "../../../../../share/GlobalContext";
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { useMutation } from "react-query";
 import Cookies from "js-cookie";

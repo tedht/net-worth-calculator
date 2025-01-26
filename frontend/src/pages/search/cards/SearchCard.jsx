@@ -4,7 +4,7 @@ import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
 import Entry from "../../home/components/entries/Entry";
 import FilterModal from "../modal/FilterModal";
 
-import GlobalContext from "../../../share/context/GlobalContext";
+import GlobalContext from "../../../share/GlobalContext";
 
 const cardStyle = {
   border: 2,

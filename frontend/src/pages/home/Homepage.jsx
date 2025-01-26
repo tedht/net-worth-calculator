@@ -4,7 +4,7 @@ import ProfileCard from './components/cards/ProfileCard';
 import AssetCard from './components/cards/AssetCard';
 import LiabilityCard from './components/cards/LiabilityCard';
 import AddEntryModal from './components/entries/modal/AddEntryModal';
-import GlobalContext from '../../share/context/GlobalContext';
+import GlobalContext from '../../share/GlobalContext';
 import Cookies from 'js-cookie';
 import Axios from '../../share/AxiosInstance';
 import { useQuery } from 'react-query';

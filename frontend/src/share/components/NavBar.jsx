@@ -1,21 +1,20 @@
 import { useContext, useState, useEffect } from 'react';
 import { useQuery } from 'react-query';
-import { AppBar, Toolbar, Typography, Box, IconButton, Button } from "@mui/material";
-import { useTheme } from '@mui/material';
-
 import Cookies from 'js-cookie';
 
-import MenuIcon from '@mui/icons-material/Menu';
+import { AppBar, Toolbar, Typography, Box, IconButton, Button, useTheme } from '@mui/material';
+import MenuIcon   from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
-import LoginIcon from '@mui/icons-material/Login';
+import LoginIcon  from '@mui/icons-material/Login';
 
-import GlobalContext from '../context/GlobalContext';
-import Axios from '../AxiosInstance';
 
-import MenuBar from './MenuBar';
-import NavBarButton from './NavBarButton';
-import LoginModal from './auth/LoginModal';
-import CreateAccountModal from './auth/CreateAccountModal'
+import GlobalContext from '../GlobalContext';
+import Axios         from '../AxiosInstance';
+
+import MenuBar            from './MenuBar';
+import NavBarButton       from './NavBarButton';
+import LoginModal         from './auth/LoginModal';
+import CreateAccountModal from './auth/CreateAccountModal';
 
 const NavBar = () => {
 	const { user, setUser, setEntries } = useContext(GlobalContext);
@@ -103,11 +102,13 @@ const NavBar = () => {
 		<LoginModal
 			open={openLoginModal} 
 			handleCloseLogin={handleCloseLogin} 
-			handleOpenCreateAccount={handleOpenCreateAccount}/>
+			handleOpenCreateAccount={handleOpenCreateAccount}
+		/>
 		<CreateAccountModal
 			open={openCreateAccountModal} 
 			handleCloseCreateAccount={handleCloseCreateAccount}
-			handleOpenLogin={handleOpenLogin}/>
+			handleOpenLogin={handleOpenLogin}
+		/>
 
 		<AppBar sx={appBarStyle}>
 			<Toolbar sx={toolBarStyle}>
@@ -118,8 +119,8 @@ const NavBar = () => {
 					
 				{/* Logo + Language Button*/}
 				<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-					<Typography variant="logo">Net Worth Calculator</Typography>
-					<Button onClick={()=>{}} color="inherit" sx={{ mx: 1, display: { xs: 'none', lg: 'block' } }}>En</Button>
+					<Typography variant='logo'>Net Worth Calculator</Typography>
+					<Button onClick={()=>{}} color='inherit' sx={{ mx: 1, display: { xs: 'none', lg: 'block' } }}>En</Button>
 				</Box>
 
 				{/* NavBar Buttons*/}
@@ -131,16 +132,21 @@ const NavBar = () => {
 
 				{/* Account */}
 				{user ? (
-				<Button startIcon={<LogoutIcon />} onClick={handleLogout} color="inherit">
+				<Button startIcon={<LogoutIcon />} onClick={handleLogout} color='inherit'>
 					Logout
 				</Button>
 				) : (
 				<>
-				<Button startIcon={<LoginIcon />} onClick={handleOpenLogin} color="inherit" sx={{ display: { xs: 'none', lg: 'flex' } }}> 
+				<Button 
+					variant='contained'
+					color='primary'
+					startIcon={<LoginIcon />}
+					onClick={handleOpenLogin} sx={{ display: { xs: 'none', sm: 'flex' }, boxShadow: 0 }}
+				> 
 					Login
 				</Button>
-				<IconButton onClick={handleOpenMenuBar} sx={{ display: { xs: 'block', lg: 'none' } }}>
-					<LoginIcon sx={{ color: theme.palette.contrastText.main }} />
+				<IconButton onClick={handleOpenLogin} sx={{ display: { xs: 'block', sm: 'none' } }}>
+					<LoginIcon color='secondary' />
 				</IconButton>
 				</>
 				)}

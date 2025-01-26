@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Box, Card, CardContent, Typography, IconButton } from "@mui/material";
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import Entry from "../entries/Entry";
-import GlobalContext from "../../../../share/context/GlobalContext";
+import GlobalContext from "../../../../share/GlobalContext";
 import { useTheme } from "@mui/material/styles";
 
 const cardStyle = {

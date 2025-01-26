@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { Grid, Typography } from "@mui/material";
 import SearchCard from "./cards/SearchCard";
 
-import GlobalContext from "../../share/context/GlobalContext";
+import GlobalContext from "../../share/GlobalContext";
 import Axios from "../../share/AxiosInstance";
 import Cookies from "js-cookie";
 import { useQuery } from "react-query";

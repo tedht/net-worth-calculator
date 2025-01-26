@@ -4,7 +4,7 @@ import { useTheme } from "@mui/material";
 
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 
-import GlobalContext from "../../../../share/context/GlobalContext";
+import GlobalContext from "../../../../share/GlobalContext";
 
 import Entry from "../entries/Entry";
 

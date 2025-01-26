@@ -45,6 +45,12 @@ const theme = createTheme({
 			dark: '#000000', 
 			active: '#F5F5F5',
 		},
+		secondary: {
+			main: '#F5F5F5',
+			light: '#000000',
+			dark: '#484848', 
+			active: '#212121',
+		},
 		contrastText: {
 			main: '#F5F5F5',
 			light: '#F5F5F5',
@@ -55,7 +61,40 @@ const theme = createTheme({
 			asset: '#2DD881',
 			liability: '#FF0022',
 		},
-	}
+	},
+	components: {
+		MuiButton: {
+		  	variants: [
+			{
+				props: { variant: 'contained', color: 'primary' },
+				style: {
+					textTransform: 'none',
+					fontWeight: 'bold',
+					borderRadius: 2,
+			  },
+			},
+			{
+			  props: { variant: 'contained', color: 'secondary' },
+			  style: {
+				textTransform: 'none',
+				fontWeight: 'bold',
+				borderRadius: 2,
+			  },
+			},
+			{
+			  props: { variant: 'text' },
+			  style: {
+				color: '#1976d2',
+				textTransform: 'none',
+				fontWeight: 'normal',
+				'&:hover': {
+				  backgroundColor: 'rgba(25, 118, 210, 0.1)',
+				},
+			  },
+			},
+		  ],
+		},
+	  },
 });
 
 export default theme;

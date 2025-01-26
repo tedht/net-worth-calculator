@@ -2,7 +2,7 @@
 import { useState, useMemo } from 'react';
 import { Box } from "@mui/material";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import GlobalContext from './share/context/GlobalContext';
+import GlobalContext from './share/GlobalContext';
 import { QueryClientProvider, QueryClient } from 'react-query';
 
 //components
@@ -13,10 +13,11 @@ import Search from "./pages/search/Search";
 import Error from "./pages/error/Error";
 
 const App = () => {
-	const [user, setUser] = useState();
+	const [user,    setUser]    = useState();
 	const [entries, setEntries] = useState([]);
-
+	
 	const [queryClient] = useState(() => new QueryClient());
+	
 	const globalContextValue = useMemo(() => {
 		return {
 			user,

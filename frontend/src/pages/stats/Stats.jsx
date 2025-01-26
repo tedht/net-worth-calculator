@@ -4,7 +4,7 @@ import LiabilityStats from "./components/LiabilityStats";
 import AssetDistribution from "./components/AssetDistribution";
 import LiabilityDistribution from "./components/LiabilityDistribution";
 import { useContext, useState } from "react";
-import GlobalContext from "../../share/context/GlobalContext";
+import GlobalContext from "../../share/GlobalContext";
 
 function Stats() {
   const { entries } = useContext(GlobalContext);
