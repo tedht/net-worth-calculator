@@ -1,9 +1,10 @@
 import { useState, useContext } from "react";
 import { Box, Typography, TextField, Button, Checkbox, FormControl, FormHelperText } from "@mui/material";
-import GlobalContext from '../../GlobalContext';
 
 import { useMutation } from 'react-query';
+
 import Axios from "../../AxiosInstance";
+import GlobalContext from '../../GlobalContext';
 
 import ModalCard from "../ModalCard";
 
@@ -16,7 +17,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 const CreateAccountModal = ({ 
 	open = false, 
 	handleCloseCreateAccount = () => {},
-	handleOpenLogin = () => {}
+	handleOpenLogin          = () => {}
 }) => {
 	const [firstname,        setFirstname       ] = useState('');
 	const [firstnameError,   setFirstnameError  ] = useState('');
@@ -57,7 +58,7 @@ const CreateAccountModal = ({
 			},
 			onError: (error) => {
 				console.error(error);
-				alert("Account creation error")
+				alert("Account creation error");
 				setPassword('');
 				setRePassword('');
 			},

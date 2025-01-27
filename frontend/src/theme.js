@@ -1,6 +1,21 @@
 import { createTheme } from "@mui/material/styles";
 import "@fontsource/roboto";
 
+const customColors = {
+	asset: {
+		main: '#2DD881',
+		light: '#5DF5A4',
+		dark: '#1B9B5F',
+		contrastText: '#FFFFFF',
+	},
+	liability: {
+		main: '#FF0022',
+		light: '#FF4455',
+		dark: '#990013',
+		contrastText: '#FFFFFF',
+	}
+};
+
 const theme = createTheme({
 	typography: {
 		h1: {
@@ -57,40 +72,28 @@ const theme = createTheme({
 			dark: '#212121', 
 			active: '#212121',
 		},
-		custom: {
-			asset: '#2DD881',
-			liability: '#FF0022',
-		},
+		custom: customColors,
 	},
 	components: {
 		MuiButton: {
-		  	variants: [
-			{
-				props: { variant: 'contained', color: 'primary' },
-				style: {
+			styleOverrides: {
+				root: {
 					textTransform: 'none',
 					fontWeight: 'bold',
 					borderRadius: 2,
-			  },
-			},
-			{
-			  props: { variant: 'contained', color: 'secondary' },
-			  style: {
-				textTransform: 'none',
-				fontWeight: 'bold',
-				borderRadius: 2,
-			  },
-			},
-			{
-			  props: { variant: 'text' },
-			  style: {
-				color: '#1976d2',
-				textTransform: 'none',
-				fontWeight: 'normal',
-				'&:hover': {
-				  backgroundColor: 'rgba(25, 118, 210, 0.1)',
 				},
-			  },
+			},
+		  	variants: [
+			{
+				props: { variant: 'text' },
+				style: {
+					color: '#1976d2',
+					textTransform: 'none',
+					fontWeight: 'normal',
+					'&:hover': {
+						backgroundColor: 'rgba(25, 118, 210, 0.1)',
+					},
+				},
 			},
 		  ],
 		},

@@ -3,8 +3,8 @@ import { Box, Typography, IconButton } from "@mui/material";
 import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
-import EditEntryModal from "./modal/EditEntryModal";
-import DeleteEntryModal from "./modal/DeleteEntryModal";
+import EditEntryModal from "../modals/EditEntryModal";
+import DeleteEntryModal from "../modals/DeleteEntryModal";
 
 const iconButtonStyle = {
 	color: "#060739",

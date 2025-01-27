@@ -4,14 +4,14 @@ import {
 	Button, Select, MenuItem, InputLabel, FormControl, FormHelperText ,
 	OutlinedInput, InputAdornment
 } from "@mui/material";
-import GlobalContext from "../../../../../share/GlobalContext";
+import GlobalContext from "../../../../share/GlobalContext";
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import { useQueryClient, useMutation } from "react-query";
-import Axios from "../../../../../share/AxiosInstance";
+import { useMutation } from "react-query";
 import Cookies from "js-cookie";
+import Axios from "../../../../share/AxiosInstance";
 
 const modalCardStyle = {
-	position: 'relative',
+	position: 'absolute',
 	top: '2%',
 	left: '50%',
 	transform: 'translate(-50%, 0%)',
@@ -49,17 +49,11 @@ const primaryButtonStyle = {
 	},
 }
 
-function AddEntryModal({ open = false, handleCloseAddEntry = () => {}, label = '' }){
-	const [newEntry, setNewEntry] = useState({
-		name: '',
-		value: '',
-		category: '',
-		label: '',
-	});
+function EditEntryModal({ entry = {}, open = false, handleCloseEditEntry = () => {}, label = '' }){
+	const [editEntry, setEditEntry] = useState(entry);
 	const [error, setError] = useState({});
 
-	const { entries, setEntries, user } = useContext(GlobalContext);
-	const queryClient = useQueryClient();
+	const { entries, setEntries } = useContext(GlobalContext);
 
 	const assetCategories = [
 		'Bank account', 
@@ -73,45 +67,37 @@ function AddEntryModal({ open = false, handleCloseAddEntry = () => {}, label = '
 		'Other',
 	];
 
+	useEffect(() => {
+		setEditEntry(entry);
+	}, [entry]);
+
 	const resetAndClose = () => {
-		setNewEntry({
-			name: '',
-			value: '',
-			category: '',
-			label: label,
-		});
 		setError({});
-		handleCloseAddEntry();
+		handleCloseEditEntry();
 	}
 
-	useEffect(() => {
-		setNewEntry({...newEntry, label: label});
-	}, [label]);
-
 	const handleSubmit = async () => {
-		if(!validateForm()) return;
-		addMutation.mutate();
+		if(!validateForm())return;
+		editMutation.mutate();
 	};
 	
 	const validateForm = () => {
 		const error = {};
-		if (!newEntry.name)                         error.name     = 'Entry name is required';
-		if (!newEntry.value && newEntry!=='0')      error.value    = 'Value is required';
-		else if (!/^[0-9]*$/g.test(newEntry.value)) error.value    = 'Invalid value';
-		if (!newEntry.category)                     error.category = 'Category is required';
-		if (!newEntry.label)                        error.label    = 'Label is required';
+		if (!editEntry.name) error.name = 'Entry name is required';
+		if (!editEntry.value) error.value = 'Value is required';
+		else if (!/^[0-9]*$/g.test(editEntry.value)) error.value = 'Invalid value';
+		if (!editEntry.category) error.category = 'Category is required';
 		setError(error);
 
 		if (Object.keys(error).length) return false;
 		return true;
 	}
 
-	const addMutation = useMutation(() =>
-	Axios.post('/entry',	
+	const editMutation = useMutation(() =>
+	Axios.patch('/entry',	
 	{
-		...newEntry, 
-		value: parseInt(newEntry.value), 
-		userid: user.id,
+		...editEntry, 
+		value: parseInt(editEntry.value), 
 	}, 
 	{
 		headers: { Authorization: `Bearer ${Cookies.get('UserToken')}` }
@@ -119,8 +105,7 @@ function AddEntryModal({ open = false, handleCloseAddEntry = () => {}, label = '
 	{
 		onSuccess: (data) => {
 			if(data.data.success){
-				queryClient.invalidateQueries();
-				setEntries((prev) => [...prev, data.data]);
+				setEntries((prev) => prev.map((n) => (n.id === editEntry.id ? data.data.data.data : n)))
 				resetAndClose();
 			}
 		},
@@ -136,10 +121,10 @@ function AddEntryModal({ open = false, handleCloseAddEntry = () => {}, label = '
 			onClose={resetAndClose}
 			sx={{overflow: 'scroll'}}>
 			<Card sx={modalCardStyle}>
-				<CardContent sx={{ p: 0}}>
+				<CardContent sx={{ p: 0 }}>
 					<Box borderBottom={2} sx={{ p: 1, bgcolor: '#060739', display: 'flex', justifyContent: 'space-between' }}>
-						<Typography variant="h1" sx={{ color: '#FFFFFF', ml: '20px' }}>
-							Add {label}
+						<Typography variant="h1" sx={{ color: '#FFFFFF',ml: '20px' }}>
+							Edit {label}
 						</Typography>
 						<IconButton sx={{ p: 0, mr: '20px' }} onClick={resetAndClose}>
 							<CloseRoundedIcon sx={exitButtonStyle} />
@@ -150,10 +135,10 @@ function AddEntryModal({ open = false, handleCloseAddEntry = () => {}, label = '
 						<FormControl fullWidth error={!!error.name}>
 							<InputLabel>Name</InputLabel>
 							<OutlinedInput
-								value={newEntry.name}
+								value={editEntry.name}
 								label="Name"
 								placeholder={"Type your "+label+"'s name"}
-								onChange={(e) => setNewEntry({...newEntry, name: e.target.value})}/>
+								onChange={(e) => setEditEntry({...editEntry, name: e.target.value})}/>
 							 <FormHelperText>
 								{(!!error.name) ? error.name : ''}
 							</FormHelperText>
@@ -161,10 +146,10 @@ function AddEntryModal({ open = false, handleCloseAddEntry = () => {}, label = '
 						<FormControl fullWidth error={!!error.value}>
 							<InputLabel>Value</InputLabel>
 							<OutlinedInput
-								value={newEntry.value}
+								value={editEntry.value}
 								label="Value"
 								placeholder={"Type the value of your "+label}
-								onChange={(e) => setNewEntry({...newEntry, value: e.target.value})}
+								onChange={(e) => setEditEntry({...editEntry, value: e.target.value})}
 								endAdornment={<InputAdornment position="end">THB</InputAdornment>}/>
 							 <FormHelperText>
 								{(!!error.value) ? error.value : ''}
@@ -174,9 +159,9 @@ function AddEntryModal({ open = false, handleCloseAddEntry = () => {}, label = '
 							<InputLabel id="category">Category</InputLabel>
 							<Select
 								labelId="category"
-								value={newEntry.category}
+								value={editEntry.category}
 								label="Category"
-								onChange={(e) => setNewEntry({...newEntry, category: e.target.value})}> 
+								onChange={(e) => setEditEntry({...editEntry, category: e.target.value})}> 
 								{(label === 'asset') ? 
 								(assetCategories.map((category, index) => (
 								<MenuItem value={category} key={index}>{category}</MenuItem>))) :
@@ -192,7 +177,7 @@ function AddEntryModal({ open = false, handleCloseAddEntry = () => {}, label = '
 						<Button 
 							sx={primaryButtonStyle}
 							onClick={handleSubmit}>
-							Add
+							Edit
 						</Button>
 					</Box>
 				</CardContent>
@@ -201,4 +186,4 @@ function AddEntryModal({ open = false, handleCloseAddEntry = () => {}, label = '
 	);
 }
 
-export default AddEntryModal;
+export default EditEntryModal;

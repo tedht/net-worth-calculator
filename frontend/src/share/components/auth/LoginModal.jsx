@@ -1,101 +1,45 @@
 import { useState, useContext } from "react";
-import { Modal, Card, CardContent, Box, Typography, IconButton, TextField, Button } from "@mui/material";
-import GlobalContext from '../../GlobalContext';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-
+import { TextField, Button } from "@mui/material";
 import { useMutation } from 'react-query';
+
+import GlobalContext from '../../GlobalContext';
 import Axios from "../../AxiosInstance";
 
-const modalCardStyle = {
-	position: 'absolute',
-	top: '2%',
-	left: '50%',
-	transform: 'translate(-50%, 0%)',
-	width: { xs: '90%', md: '60%'},
-	background: '#F5F5F5',
-	border: 2,
-	borderRadius: 9,
-	p: 0,
-}
+import ModalCard from "../ModalCard";
 
-const exitButtonStyle = {
-	color: "#FFFFFF",
-	fontSize: '180%',
-	'&:hover': {
-		color: '#5F60AC',
-		boxShadow: 'none',
-	},
-}
-
-const loginButtonStyle = {
-	fontSize: "28px",
-	width: "30%",
-	height: "70px",
-	color: "#FFFFFF",
-	backgroundColor: "#060739",
-	border: "#060739",
-	borderRadius: 4,
-	textAlign: "center",
-	padding: "10",
-	boxShadow: 2,
-	'&:hover': {
-		backgroundColor: '#5F60AC',
-		borderColor: '#5F60AC',
-		boxShadow: 2,
-	},
-}
-
-const createAccountButtonStyle = {
-	height: "50px",
-	border: 2,
-	color: "#060739",
-	backgroundColor: "#FFFFFF",
-	borderRadius: 4,
-	textAlign: "center",
-	padding: "10",
-	boxShadow: 1,
-	'&:hover': {
-		backgroundColor: '#5F60AC',
-		color: "#FFFFFF",
-		borderColor: '#5F60AC',
-		boxShadow: 'none',
-	},
-}
-
-function LoginModal({ open = false, handleCloseLogin = () => {}, handleOpenCreateAccount = () => {} }){
-	const [email, setEmail] = useState('');
-	const [emailError, setEmailError] = useState('');
-	const [password, setPassword] = useState('');
+const LoginModal = ({ 
+	open = false, 
+	handleCloseLogin        = () => {}, 
+	handleOpenCreateAccount = () => {} 
+}) => {
+	const [email,         setEmail        ] = useState('');
+	const [emailError,    setEmailError   ] = useState('');
+	const [password,      setPassword     ] = useState('');
 	const [passwordError, setPasswordError] = useState('');
 	
 	const { setUser } = useContext(GlobalContext);
 
 	const loginMutation = useMutation(() =>
-	Axios.post('/login', {
+	Axios.get('/users', {
 		email,
 		password,
 	}),
 	{
-		onSuccess: (data) => {
-			if(data.data.success){
-				setUser({
-					 firstname: data.data.user.firstname,
-					 lastname: data.data.user.lastname,
-					 email: data.data.user.email,
-					 dateofbirth: data.data.user.dateofbirth,
-					 id: data.data.user.id,
-				});
-				resetAndClose();
-			} else {
-				if(data.data.message === "User not found") setEmailError(data.data.message);
-				else if(data.data.message === "Incorrect password") {
-					setPasswordError(data.data.message);
-					setPassword('');
-				}
-			}
+		onSuccess: (data) =>{
+			console.log(data);
+			setUser({
+				firstname: data.data.firstname,
+				lastname: data.data.lastname,
+				email: data.data.email,
+				dateofbirth: data.data.dateofbirth,
+				id: data.data.id,
+			})
+			resetAndClose();
 		},
 		onError: (error) => {
-			console.log(error);
+			console.error(error);
+			alert("Login error");
+			setPassword('');
 		},
 	}
 );
@@ -140,52 +84,42 @@ function LoginModal({ open = false, handleCloseLogin = () => {}, handleOpenCreat
 	};
 
 	return (
-		<Modal 
-			open={open}
-			onClose={resetAndClose}>
-			<Card sx={modalCardStyle}>
-				<CardContent sx={{ p: 0 }}>
-					<Box borderBottom={2} sx={{ p: 1, bgcolor: '#060739', display: 'flex', justifyContent: 'space-between' }}>
-						<Typography variant="h1" sx={{ color: '#FFFFFF',ml: '20px' }}>
-							Login
-						</Typography>
+		<ModalCard open={open} title="Login" handleClose={resetAndClose}>
 
-						<IconButton sx={{ p: 0, mr: '20px' }} onClick={resetAndClose}>
-							<CloseRoundedIcon sx={exitButtonStyle} />
-						</IconButton>
-					</Box>
-					<Box sx={{p: 2, gap: 2, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-						<TextField							
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-							fullWidth
-							error={emailError !== ''}
-							helperText={emailError}
-							label="Email"
-							placeholder="Type your email"/>
-						<TextField							
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-							fullWidth
-							error={passwordError !== ''}
-							helperText={passwordError}
-							type="password"
-							label="Password"
-							placeholder="Type your password"/>
-						<Button 
-							sx={loginButtonStyle}
-							onClick={handleSubmit}>
-							Login
-						</Button>
-						<Button 
-							sx={createAccountButtonStyle}
-							onClick={() => {handleCloseLogin(); handleOpenCreateAccount()}}>
-							Create Account
-						</Button>
-					</Box>
-				</CardContent>
-			</Card>
-		</Modal>
+		{/* Email */}
+		<TextField							
+			value={email}
+			onChange={(e) => setEmail(e.target.value)}
+			fullWidth
+			error={emailError !== ''}
+			helperText={emailError}
+			label="Email"
+			placeholder="Type your email"/>
+
+		{/* Password */}
+		<TextField							
+			value={password}
+			onChange={(e) => setPassword(e.target.value)}
+			fullWidth
+			error={passwordError !== ''}
+			helperText={passwordError}
+			type="password"
+			label="Password"
+			placeholder="Type your password"/>
+
+		<Button 
+			variant="contained" 
+			color="primary"
+			onClick={handleSubmit}>
+			Login
+		</Button>
+		<Button 
+			variant="text" 
+			onClick={() => {handleCloseLogin(); handleOpenCreateAccount()}}>
+			Create Account
+		</Button>
+
+		</ModalCard>
 	);
 }
 

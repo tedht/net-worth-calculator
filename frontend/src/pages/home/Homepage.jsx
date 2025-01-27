@@ -3,11 +3,13 @@ import { Grid, Box, Typography } from "@mui/material";
 import ProfileCard from './components/cards/ProfileCard';
 import AssetCard from './components/cards/AssetCard';
 import LiabilityCard from './components/cards/LiabilityCard';
-import AddEntryModal from './components/entries/modal/AddEntryModal';
+import AddEntryModal from './components/modals/AddEntryModal';
 import GlobalContext from '../../share/GlobalContext';
 import Cookies from 'js-cookie';
 import Axios from '../../share/AxiosInstance';
 import { useQuery } from 'react-query';
+
+import EntryTable from './components/EntryTable';
 
 
 const Homepage = () => {
@@ -16,7 +18,7 @@ const Homepage = () => {
 	const [openAddEntryModal, setOpenAddEntryModal] = useState(false);
 	const [startFetch, setStartFetch] = useState(false);
 
-	const handleOpenAddEntry = () => setOpenAddEntryModal(true);
+	const handleOpenAddEntry = (label) => {setLabel(label); setOpenAddEntryModal(true);};
 	const handleCloseAddEntry = () => setOpenAddEntryModal(false);
 	
 	const fetchEntries = async () => {
@@ -71,7 +73,7 @@ const Homepage = () => {
 			
 		<Grid container spacing={2} direction={"row"}>
 			<Grid item xs={12}>
-				<Typography variant='h1'>Home</Typography>
+				<Typography variant='h1' sx={{textAlign: 'center'}}>Home</Typography>
 			</Grid>
  
 			{/*<Grid item lg={4} md={5} xs={12}>
@@ -82,17 +84,11 @@ const Homepage = () => {
 			</Grid> */}
 			
 			<Grid item lg={6} xs={12}>
-				<AssetCard 
-					handleOpenAddEntry={handleOpenAddEntry} 
-					setLabel={setLabel}
-				/>
+				<EntryTable label='asset' handleOpenAddEntry={handleOpenAddEntry}/>
 			</Grid>
 
 			<Grid item lg={6} xs={12}>
-				<LiabilityCard 
-					handleOpenAddEntry={handleOpenAddEntry} 
-					setLabel={setLabel}
-				/>
+				<EntryTable label='liability' handleOpenAddEntry={handleOpenAddEntry}/>
 			</Grid>
 		</Grid>
 		</>

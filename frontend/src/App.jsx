@@ -6,7 +6,7 @@ import GlobalContext from './share/GlobalContext';
 import { QueryClientProvider, QueryClient } from 'react-query';
 
 //components
-import NavBar from "./share/components/NavBar";
+import NavBar from "./share/components/nav/NavBar";
 import Homepage from './pages/home/Homepage';
 import Stats from "./pages/stats/Stats";
 import Search from "./pages/search/Search";

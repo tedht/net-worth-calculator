@@ -30,7 +30,7 @@ function AssetCard({handleOpenAddEntry = () => {}, setLabel = () => {}}) {
 			<CardContent sx={{
 							p: 0,
 							m: 0}}>
-				<Box borderBottom={2} sx={{ bgcolor: theme.palette.custom.asset }}>
+				<Box borderBottom={2} sx={{ bgcolor: theme.palette.custom.asset.main }}>
 					<Typography variant="h1" sx={{ ml: '20px' }}>
 						Assets
 					</Typography>
@@ -38,12 +38,7 @@ function AssetCard({handleOpenAddEntry = () => {}, setLabel = () => {}}) {
 				{entries.map((entry, index) => (entry.label === 'asset') && 
 				(<Entry key={index} entry={entry} setLabel={setLabel}/>))}
 				<Box sx={{ display: 'flex', justifyContent: 'center', my: 3}}>
-					{/* {(user) && (<IconButton 
-						sx={{ p: 0 }}
-						onClick={() => {setLabel('asset'); handleOpenAddEntry()}}>
-						<AddCircleOutlineRoundedIcon sx={iconButtonStyle}/>
-					</IconButton>)} */}
-					{(<IconButton 
+					{(user) && (<IconButton 
 						sx={{ p: 0 }}
 						onClick={() => {setLabel('asset'); handleOpenAddEntry()}}>
 						<AddCircleOutlineRoundedIcon sx={iconButtonStyle}/>

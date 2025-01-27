@@ -8,13 +8,13 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon  from '@mui/icons-material/Login';
 
 
-import GlobalContext from '../GlobalContext';
-import Axios         from '../AxiosInstance';
+import GlobalContext from '../../GlobalContext';
+import Axios         from '../../AxiosInstance';
 
 import MenuBar            from './MenuBar';
 import NavBarButton       from './NavBarButton';
-import LoginModal         from './auth/LoginModal';
-import CreateAccountModal from './auth/CreateAccountModal';
+import LoginModal         from '../auth/LoginModal';
+import CreateAccountModal from '../auth/CreateAccountModal';
 
 const NavBar = () => {
 	const { user, setUser, setEntries } = useContext(GlobalContext);
@@ -120,7 +120,14 @@ const NavBar = () => {
 				{/* Logo + Language Button*/}
 				<Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
 					<Typography variant='logo'>Net Worth Calculator</Typography>
-					<Button onClick={()=>{}} color='inherit' sx={{ mx: 1, display: { xs: 'none', lg: 'block' } }}>En</Button>
+					<Button 
+						variant='contained'
+						color='primary'
+						onClick={()=>{}} 
+						sx={{ display: { xs: 'none', md: 'flex' }, boxShadow: 0, borderRadius: 100}}
+					>
+					En
+					</Button>
 				</Box>
 
 				{/* NavBar Buttons*/}
@@ -141,11 +148,12 @@ const NavBar = () => {
 					variant='contained'
 					color='primary'
 					startIcon={<LoginIcon />}
-					onClick={handleOpenLogin} sx={{ display: { xs: 'none', sm: 'flex' }, boxShadow: 0 }}
+					onClick={handleOpenLogin} 
+					sx={{ display: { xs: 'none', sm: 'flex' }, boxShadow: 0 }}
 				> 
 					Login
 				</Button>
-				<IconButton onClick={handleOpenLogin} sx={{ display: { xs: 'block', sm: 'none' } }}>
+				<IconButton onClick={handleOpenLogin} sx={{ display: { xs: 'block', sm: 'none' }}}>
 					<LoginIcon color='secondary' />
 				</IconButton>
 				</>
