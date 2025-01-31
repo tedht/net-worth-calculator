@@ -1,10 +1,9 @@
 import { useContext, useState } from "react";
 import { Card, CardContent, Box, TextField, IconButton } from "@mui/material";
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
-import Entry from "../../home/components/entries/Entry";
-import FilterModal from "../modal/FilterModal";
+import FilterModal from "../../../components/modals/FilterModal";
 
-import GlobalContext from "../../../share/GlobalContext";
+import GlobalContext from "../../../context/globalContext";
 
 const cardStyle = {
   border: 2,
@@ -68,7 +67,7 @@ function SearchCard({
             <FilterAltRoundedIcon sx={filterAltButtonStyle}/>
           </IconButton>
         </Box>
-        {filteredEntries.map((entry, index) => (<Entry key={index} entry={entry} setLabel={setLabel}/>))}
+        {/* {filteredEntries.map((entry, index) => (<Entry key={index} entry={entry} setLabel={setLabel}/>))} */}
         <Box sx={{ mb: 20 }}/>
       </CardContent>
     </Card>

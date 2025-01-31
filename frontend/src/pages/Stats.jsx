@@ -1,10 +1,10 @@
 import { Typography, Grid } from "@mui/material";
-import AssetStats from "./components/AssetStats";
-import LiabilityStats from "./components/LiabilityStats";
-import AssetDistribution from "./components/AssetDistribution";
-import LiabilityDistribution from "./components/LiabilityDistribution";
+import AssetStats from "./stats/components/AssetStats";
+import LiabilityStats from "./stats/components/LiabilityStats";
+import AssetDistribution from "./stats/components/AssetDistribution";
+import LiabilityDistribution from "./stats/components/LiabilityDistribution";
 import { useContext, useState } from "react";
-import GlobalContext from "../../share/GlobalContext";
+import GlobalContext from "../context/globalContext";
 
 function Stats() {
   const { entries } = useContext(GlobalContext);

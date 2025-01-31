@@ -8,13 +8,13 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon  from '@mui/icons-material/Login';
 
 
-import GlobalContext from '../../GlobalContext';
-import Axios         from '../../AxiosInstance';
+import GlobalContext from '../../context/globalContext';
+import Axios         from '../../services/axiosInstance';
 
 import MenuBar            from './MenuBar';
 import NavBarButton       from './NavBarButton';
-import LoginModal         from '../auth/LoginModal';
-import CreateAccountModal from '../auth/CreateAccountModal';
+import LoginModal         from '../modals/auth/LoginModal';
+import CreateAccountModal from '../modals/auth/CreateAccountModal';
 
 const NavBar = () => {
 	const { user, setUser, setEntries } = useContext(GlobalContext);

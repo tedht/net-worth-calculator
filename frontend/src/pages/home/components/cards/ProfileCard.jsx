@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Box, Card, CardContent, Typography, Button } from "@mui/material";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import GlobalContext from "../../../../share/GlobalContext";
+import GlobalContext from "../../../../context/globalContext";
 import dayjs from 'dayjs';
 
 const profileCardStyle = {

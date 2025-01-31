@@ -1,16 +1,14 @@
-//imports
 import { useState, useMemo } from 'react';
 import { Box } from "@mui/material";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import GlobalContext from './share/GlobalContext';
+import GlobalContext from './context/globalContext';
 import { QueryClientProvider, QueryClient } from 'react-query';
 
-//components
-import NavBar from "./share/components/nav/NavBar";
-import Homepage from './pages/home/Homepage';
-import Stats from "./pages/stats/Stats";
-import Search from "./pages/search/Search";
-import Error from "./pages/error/Error";
+import NavBar from "./components/nav/NavBar";
+import Homepage from './pages/Homepage';
+import Stats from "./pages/Stats";
+import Search from "./pages/Search";
+import Error from "./pages/Error";
 
 const App = () => {
 	const [user,    setUser]    = useState();
@@ -34,10 +32,10 @@ const App = () => {
 		<NavBar />
 		<Box sx={{p: 2}}>
 			<Routes>
-				<Route path="/" element={<Homepage />}/>
-				<Route path="/stats" element={<Stats />}/>
-				<Route path="/search" element={<Search />}/>
-				<Route path="*" element={<Error />}/>
+				<Route path="/"       element={ <Homepage /> }/>
+				<Route path="/stats"  element={ <Stats    /> }/>
+				<Route path="/search" element={ <Search   /> }/>
+				<Route path="*"       element={ <Error    /> }/>
 			</Routes>
 		</Box>
 		</QueryClientProvider> 

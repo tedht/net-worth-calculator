@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "id": "9f5f",
+      "firstname": "Ted",
+      "lastname": "Herambert",
+      "dateOfBirth": "2025-01-19",
+      "email": "tedht@mail.com",
+      "password": "Bidon123"
+    },
+    {
+      "id": "c110",
+      "firstname": "John",
+      "lastname": "Doe",
+      "dateOfBirth": "2025-01-31",
+      "email": "johndoe@mail.com",
+      "password": "Password123"
+    }
+  ],
+  "entries": [
+    {
+      "id": "3b3b",
+	  "name": "Honda Civic",
+      "value": 1000,
+      "category": "Car",
+      "userId": "9f5f",
+      "type": "Asset"
+    }
+  ]
+}

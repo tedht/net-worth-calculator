@@ -1,11 +1,11 @@
 import { useState, useContext } from "react";
 import { TextField, Button } from "@mui/material";
-import { useMutation } from 'react-query';
 
-import GlobalContext from '../../GlobalContext';
-import Axios from "../../AxiosInstance";
+import GlobalContext from "../../../context/globalContext";;
 
-import ModalCard from "../ModalCard";
+import DefaultModal from "../DefaultModal";
+
+import { useLogin } from "../../../hooks/useMutations";
 
 const LoginModal = ({ 
 	open = false, 
@@ -17,32 +17,7 @@ const LoginModal = ({
 	const [password,      setPassword     ] = useState('');
 	const [passwordError, setPasswordError] = useState('');
 	
-	const { setUser } = useContext(GlobalContext);
-
-	const loginMutation = useMutation(() =>
-	Axios.get('/users', {
-		email,
-		password,
-	}),
-	{
-		onSuccess: (data) =>{
-			console.log(data);
-			setUser({
-				firstname: data.data.firstname,
-				lastname: data.data.lastname,
-				email: data.data.email,
-				dateofbirth: data.data.dateofbirth,
-				id: data.data.id,
-			})
-			resetAndClose();
-		},
-		onError: (error) => {
-			console.error(error);
-			alert("Login error");
-			setPassword('');
-		},
-	}
-);
+	const { setUser, setEntries } = useContext(GlobalContext);
 
 	const resetAndClose = () => {
 		resetInputs();
@@ -59,11 +34,6 @@ const LoginModal = ({
 		setEmailError('');
 		setPasswordError('')
 	}
-
-	const handleSubmit = async () => {
-		if(!validateForm()) return;
-		loginMutation.mutate();
-	};
 	
 	const validateForm = () => {
 		let isValid = true;
@@ -83,8 +53,20 @@ const LoginModal = ({
 		return isValid;
 	};
 
+	const handleLogin = () => {
+		if(!validateForm()) return;
+		loginMutation.mutate(email, password);
+	};
+
+	const loginMutation = useLogin(setUser, resetAndClose, setEntries, setPassword);
+
+	const handleCreateAccount = () => {
+		handleCloseLogin(); 
+		handleOpenCreateAccount();
+	}
+
 	return (
-		<ModalCard open={open} title="Login" handleClose={resetAndClose}>
+		<DefaultModal open={open} title="Login" handleClose={resetAndClose}>
 
 		{/* Email */}
 		<TextField							
@@ -94,7 +76,8 @@ const LoginModal = ({
 			error={emailError !== ''}
 			helperText={emailError}
 			label="Email"
-			placeholder="Type your email"/>
+			placeholder="Type your email"
+		/>
 
 		{/* Password */}
 		<TextField							
@@ -105,21 +88,23 @@ const LoginModal = ({
 			helperText={passwordError}
 			type="password"
 			label="Password"
-			placeholder="Type your password"/>
+			placeholder="Type your password"
+		/>
 
 		<Button 
 			variant="contained" 
 			color="primary"
-			onClick={handleSubmit}>
+			onClick={handleLogin}>
 			Login
 		</Button>
+
 		<Button 
 			variant="text" 
-			onClick={() => {handleCloseLogin(); handleOpenCreateAccount()}}>
+			onClick={handleCreateAccount}>
 			Create Account
 		</Button>
 
-		</ModalCard>
+		</DefaultModal>
 	);
 }
 

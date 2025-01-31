@@ -1,6 +1,6 @@
 import { Box, Card, CardContent, Typography } from "@mui/material";
 import { useState, useContext, useEffect } from "react";
-import GlobalContext from "../../../share/GlobalContext";
+import GlobalContext from "../../../context/globalContext";
 
 const cardStyle = {
   border: 2,

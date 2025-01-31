@@ -1,18 +1,17 @@
 import { useState, useContext } from "react";
 import { Box, Typography, TextField, Button, Checkbox, FormControl, FormHelperText } from "@mui/material";
 
-import { useMutation } from 'react-query';
+import GlobalContext from '../../../context/globalContext';
 
-import Axios from "../../AxiosInstance";
-import GlobalContext from '../../GlobalContext';
-
-import ModalCard from "../ModalCard";
+import DefaultModal from "../DefaultModal";
 
 import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
+import { useCreateAccount } from "../../../hooks/useMutations";
 
 const CreateAccountModal = ({ 
 	open = false, 
@@ -34,36 +33,10 @@ const CreateAccountModal = ({
 	const [checked,          setChecked         ] = useState(false);
 	const [checkedError,     setCheckedError    ] = useState('');
 
-	const { setUser } = useContext(GlobalContext);
+	const [newUser,          setNewUser       ]   = useState({});
+	const [newUserErrors,    setNewUserErrors ]   = useState({});
 
-	const createAccountMutation = useMutation(() =>
-		Axios.post('/users', {
-			firstname,
-			lastname,
-			dateOfBirth,
-			email,
-			password
-		}),
-		{
-			onSuccess: (data) =>{
-				console.log(data);
-				setUser({
-					firstname: data.data.firstname,
-					lastname: data.data.lastname,
-					email: data.data.email,
-					dateofbirth: data.data.dateofbirth,
-					id: data.data.id,
-				})
-				resetAndClose();
-			},
-			onError: (error) => {
-				console.error(error);
-				alert("Account creation error");
-				setPassword('');
-				setRePassword('');
-			},
-		}
-	);
+	const { setUser } = useContext(GlobalContext);
 
 	const handleNewDateOfBirth = (event) => {
 		setInputDateOfBirth(event);
@@ -102,7 +75,7 @@ const CreateAccountModal = ({
 
 	const handleSubmit = async () => {
 		if(!validateForm()) return;
-		createAccountMutation.mutate();
+		createAccountMutation.mutate({ firstname, lastname, dateOfBirth, email, password });
 	};
 	
 	const validateForm = () => {
@@ -151,10 +124,11 @@ const CreateAccountModal = ({
 		return isValid;
 	};
 
-	return (
-		<ModalCard open={open} title={'Create Account'} handleClose={resetAndClose}>
+	const createAccountMutation = useCreateAccount(setUser, resetAndClose, setPassword, setRePassword);
 
-		{/* Firstname */}
+	return (
+		<DefaultModal open={open} title={'Create Account'} handleClose={resetAndClose}>
+
 		<TextField							
 			value={firstname}
 			onChange={(e) => setFirstname(e.target.value)}
@@ -165,7 +139,6 @@ const CreateAccountModal = ({
 			placeholder="Type your first name"
 		/>
 			
-		{/* Lastname */}
 		<TextField							
 			value={lastname}
 			onChange={(e) => setLastname(e.target.value)}
@@ -176,7 +149,6 @@ const CreateAccountModal = ({
 			placeholder="Type your last name"
 		/>
 		
-		{/* Email */}
 		<TextField							
 			value={email}
 			onChange={(e) => setEmail(e.target.value)}
@@ -187,7 +159,6 @@ const CreateAccountModal = ({
 			placeholder="Type your email"
 		/>
 
-		{/* Date of birth */}
 		<LocalizationProvider dateAdapter={AdapterDayjs}>
 			<DemoContainer components={['DatePicker', 'DatePicker']}>
 				<DatePicker
@@ -197,7 +168,6 @@ const CreateAccountModal = ({
 			</DemoContainer>
 		</LocalizationProvider>
 
-		{/* Password */}
 		<TextField							
 			value={password}
 			onChange={(e) => setPassword(e.target.value)}
@@ -209,7 +179,6 @@ const CreateAccountModal = ({
 			placeholder="Type your password"
 		/>
 
-		{/* RePassword */}
 		<TextField							
 			value={rePassword}
 			onChange={(e) => setRePassword(e.target.value)}
@@ -221,7 +190,6 @@ const CreateAccountModal = ({
 			placeholder="Type your password"
 		/>
 
-		{/* Privacy policy */}
 		<FormControl error={!!checkedError}>
 			<Box display={'flex'}>
 				<Checkbox	 
@@ -250,7 +218,7 @@ const CreateAccountModal = ({
 			Already have an account ?
 		</Button>
 		
-		</ModalCard>
+		</DefaultModal>
 	);
 }
 

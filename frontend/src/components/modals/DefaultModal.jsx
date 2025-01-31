@@ -2,7 +2,7 @@ import { Modal, Card, CardContent, Box, Typography, IconButton} from "@mui/mater
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { useTheme } from '@mui/material';
 
-const ModalCard = ({ 
+const DefaultModal = ({ 
 	open = false, 
 	title = "",
 	handleClose = () => {},
@@ -65,4 +65,4 @@ const ModalCard = ({
 	);
 }
 
-export default ModalCard;
+export default DefaultModal;
