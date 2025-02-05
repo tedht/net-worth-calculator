@@ -3,7 +3,7 @@ import { Box, Typography, TextField, Button, Checkbox, FormControl, FormHelperTe
 
 import GlobalContext from '../../../context/globalContext';
 
-import DefaultModal from "../DefaultModal";
+import TemplateModal from "../TemplateModal";
 
 import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -124,10 +124,10 @@ const CreateAccountModal = ({
 		return isValid;
 	};
 
-	const createAccountMutation = useCreateAccount(setUser, resetAndClose, setPassword, setRePassword);
+	const createAccountMutation = useCreateAccount(resetAndClose, setUser, setPassword, setRePassword);
 
 	return (
-		<DefaultModal open={open} title={'Create Account'} handleClose={resetAndClose}>
+		<TemplateModal open={open} title={'Create Account'} handleClose={resetAndClose}>
 
 		<TextField							
 			value={firstname}
@@ -218,7 +218,7 @@ const CreateAccountModal = ({
 			Already have an account ?
 		</Button>
 		
-		</DefaultModal>
+		</TemplateModal>
 	);
 }
 

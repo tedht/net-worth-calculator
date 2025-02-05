@@ -59,7 +59,7 @@ const NavBar = () => {
 					 firstname: data.data.data.firstname,
 					 lastname: data.data.data.lastname,
 					 email: data.data.data.email,
-					 dateofbirth: data.data.data.dateofbirth,
+					 dateOfBirth: data.data.data.dateOfBirth,
 					 id: data.data.data.id,
 				});
 			}
@@ -132,14 +132,20 @@ const NavBar = () => {
 
 				{/* NavBar Buttons*/}
 				<Box sx={navBarButtonsStyle}>
-					<NavBarButton name='Home'   link='/'/>
-					<NavBarButton name='Stats'  link='/stats'/>
-					<NavBarButton name='Search' link='/Search'/>
+					<NavBarButton text='Home'   link='/'/>
+					<NavBarButton text='Stats'  link='/stats'/>
+					<NavBarButton text='Search' link='/search'/>
 				</Box>
 
 				{/* Account */}
 				{user ? (
-				<Button startIcon={<LogoutIcon />} onClick={handleLogout} color='inherit'>
+				<Button 
+					variant='contained'
+					color='primary'
+					sx={{ display: { xs: 'none', sm: 'flex' }, boxShadow: 0 }}
+					startIcon={<LogoutIcon />} 
+					onClick={handleLogout} 
+				>
 					Logout
 				</Button>
 				) : (
@@ -147,9 +153,9 @@ const NavBar = () => {
 				<Button 
 					variant='contained'
 					color='primary'
+					sx={{ display: { xs: 'none', sm: 'flex' }, boxShadow: 0 }}
 					startIcon={<LoginIcon />}
 					onClick={handleOpenLogin} 
-					sx={{ display: { xs: 'none', sm: 'flex' }, boxShadow: 0 }}
 				> 
 					Login
 				</Button>

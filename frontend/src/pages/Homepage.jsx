@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 import { Grid, Box, Typography } from "@mui/material";
-import ProfileCard from './home/components/cards/ProfileCard';
+import ProfileCard from '../components/cards/ProfileCard'
 import AddEntryModal from '../components/modals/AddEntryModal';
 import EditEntryModal from '../components/modals/EditEntryModal';
 import DeleteEntryModal from '../components/modals/DeleteEntryModal';
@@ -15,12 +15,7 @@ const Homepage = () => {
 	const { entries, setEntries, user } = useContext(GlobalContext);
 
 	const [label, setLabel] = useState('');
-	const [entry, setEntry] = useState({
-		name: '',
-		value: '',
-		category: '',
-		label: '',
-	});
+	const [entry, setEntry] = useState({});
 
 	const [openAddEntryModal,    setOpenAddEntryModal   ] = useState(false);
 	const [openEditEntryModal,   setOpenEditEntryModal  ] = useState(false);
@@ -36,6 +31,8 @@ const Homepage = () => {
 	};
 
 	const handleOpenEditEntry = (label, entry) => {
+		console.log(label);
+		console.log(entry);
 		setLabel(label);
 		setEntry(entry);
 		setOpenEditEntryModal(true);
@@ -56,34 +53,6 @@ const Homepage = () => {
 		setEntry({});
 		setOpenDeleteEntryModal(false);
 	};
-
-	// const [startFetch, setStartFetch] = useState(false);
-	
-	// const fetchEntries = async () => {
-	// 	const userToken = Cookies.get('UserToken');
-	// 	return await Axios.get('/entries', {
-	// 		headers: { 
-	// 			Authorization: `Bearer ${userToken}`,
-	// 		},
-	// 	});
-	// };
-
-	// useEffect(() => {
-	// 	const userToken = Cookies.get('UserToken');
-	// 	setStartFetch(!(userToken == null || userToken == 'undefined'));
-	// }, [entries, user])
-
-	// useQuery('entries', fetchEntries, {
-	// 	onSuccess: (data) => {
-	// 		if(data.data.success){
-	// 			setEntries(data.data.data);
-	// 		}
-	// 	},
-	// 	onError: (error) => {
-	// 		console.log(error);
-	// 	},
-	// 	enabled: startFetch,
-	// });
 
 	const [startFetch, setStartFetch] = useState(false);
 
@@ -107,11 +76,13 @@ const Homepage = () => {
 	useEffect(() => {
 		const userToken = Cookies.get('UserToken');
 		setStartFetch(Boolean(userToken && userToken !== 'undefined'));
-	}, []);
+	}, [Cookies.get('UserToken')]);
 
 	useQuery('entries', fetchEntries, {
 		onSuccess: (data) => {
 			setEntries(data);
+			console.log("fetched");
+			console.log(data);
 		},
 		onError: (error) => {
 			console.error(error);
@@ -146,7 +117,6 @@ const Homepage = () => {
 		/>
 		<DeleteEntryModal 
 			open={openDeleteEntryModal} 
-			label={label}
 			entry={entry}
 			handleCloseDeleteEntry={handleCloseDeleteEntry} 
 		/>
@@ -156,13 +126,14 @@ const Homepage = () => {
 				<Typography variant='h1' sx={{textAlign: 'center'}}>Home</Typography>
 			</Grid>
  
-			{/* <Grid item lg={4} md={3} xs={0}></Grid>
+			<Grid item lg={4} md={3} xs={0}></Grid>
 			<Grid item lg={4} md={6} xs={12}>
 				<ProfileCard 
 					handleOpenLogin={()=>{}} 
 					handleOpenCreateAccount={()=>{}}
-					calculateNetworth={calculateNetworth}/>
-			</Grid>  */}
+					calculateNetworth={calculateNetworth}
+				/>
+			</Grid>
 			
 			<Grid item lg={6} xs={12}>
 				<EntryTable 

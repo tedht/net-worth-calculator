@@ -1,15 +1,14 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { 
 	Button, Select, MenuItem, InputLabel, FormControl, FormHelperText ,
 	OutlinedInput, InputAdornment
 } from "@mui/material";
-import { useQueryClient, useMutation } from "react-query";
-import Cookies from "js-cookie";
+import { useQueryClient } from "react-query";
 
 import GlobalContext from "../../context/globalContext";
-import Axios from "../../services/axiosInstance";
 
-import DefaultModal from "./DefaultModal";
+import TemplateModal from "./TemplateModal";
+import { useAddEntry } from "../../hooks/useMutations";
 
 const AddEntryModal = ({ 
 	open  = false, 
@@ -20,12 +19,10 @@ const AddEntryModal = ({
 		name: '',
 		value: '',
 		category: '',
-		label: '',
 	});
 	const [error, setError] = useState({});
 
 	const { entries, setEntries, user } = useContext(GlobalContext);
-	const queryClient = useQueryClient();
 
 	const assetCategories = [
 		'Bank account', 
@@ -40,23 +37,16 @@ const AddEntryModal = ({
 	];
 
 	const resetAndClose = () => {
-		setNewEntry({
-			name: '',
-			value: '',
-			category: '',
-			label: label,
-		});
+		setNewEntry({});
 		setError({});
 		handleCloseAddEntry();
 	}
 
-	useEffect(() => {
-		setNewEntry({...newEntry, label: label});
-	}, [label]);
-
-	const handleSubmit = async () => {
+	const handleSubmit = () => {
 		if(!validateForm()) return;
-		addMutation.mutate();
+		newEntry.type = (label.toLowerCase() === 'asset') ? 'Asset' : 'Liability';
+		newEntry.userId = user.id;
+		addMutation.mutate(newEntry);
 	};
 	
 	const validateForm = () => {
@@ -65,39 +55,16 @@ const AddEntryModal = ({
 		if (!newEntry.value && newEntry!=='0')      error.value    = 'Value is required';
 		else if (!/^[0-9]*$/g.test(newEntry.value)) error.value    = 'Invalid value';
 		if (!newEntry.category)                     error.category = 'Category is required';
-		if (!newEntry.label)                        error.label    = 'Label is required';
 		setError(error);
 
 		if (Object.keys(error).length) return false;
 		return true;
 	}
 
-	const addMutation = useMutation(() =>
-	Axios.post('/entry',	
-	{
-		...newEntry, 
-		value: parseInt(newEntry.value), 
-		userid: user.id,
-	}, 
-	{
-		headers: { Authorization: `Bearer ${Cookies.get('UserToken')}` }
-	}),
-	{
-		onSuccess: (data) => {
-			if(data.data.success){
-				queryClient.invalidateQueries();
-				setEntries((prev) => [...prev, data.data]);
-				resetAndClose();
-			}
-		},
-		onError: (error) => {
-			console.log(error);
-			resetAndClose();
-		},
-	});
+	const addMutation = useAddEntry(resetAndClose, setEntries, useQueryClient())
 
 	return (
-		<DefaultModal
+		<TemplateModal
 			open={open}
 			title={'Add '+label}
 			handleClose={resetAndClose}
@@ -105,25 +72,25 @@ const AddEntryModal = ({
 			<FormControl fullWidth error={!!error.name}>
 				<InputLabel>Name</InputLabel>
 				<OutlinedInput
-					value={newEntry.name}
+					value={newEntry.name || ""}
 					label="Name"
 					placeholder={"Type your "+label+"'s name"}
 					onChange={(e) => setNewEntry({...newEntry, name: e.target.value})}/>
 					<FormHelperText>
-					{(!!error.name) ? error.name : ''}
+					{error.name || ""}
 				</FormHelperText>
 			</FormControl>	
 
 			<FormControl fullWidth error={!!error.value}>
 				<InputLabel>Value</InputLabel>
 				<OutlinedInput
-					value={newEntry.value}
+					value={newEntry.value || ""}
 					label="Value"
 					placeholder={"Type the value of your "+label}
 					onChange={(e) => setNewEntry({...newEntry, value: e.target.value})}
-					endAdornment={<InputAdornment position="end">THB</InputAdornment>}/>
+					endAdornment={<InputAdornment position="end">€</InputAdornment>}/>
 					<FormHelperText>
-					{(!!error.value) ? error.value : ''}
+					{error.value || ""}
 				</FormHelperText>
 			</FormControl>	
 
@@ -131,7 +98,7 @@ const AddEntryModal = ({
 				<InputLabel id="category">Category</InputLabel>
 				<Select
 					labelId="category"
-					value={newEntry.category}
+					value={newEntry.category || ""}
 					label="Category"
 					onChange={(e) => setNewEntry({...newEntry, category: e.target.value})}> 
 					{(label === 'asset') ? 
@@ -143,7 +110,7 @@ const AddEntryModal = ({
 					<></>}
 				</Select>
 				<FormHelperText>
-					{(!!error.category) ? error.category : ''}
+					{error.category || ""}
 				</FormHelperText>
 			</FormControl>
 
@@ -154,7 +121,7 @@ const AddEntryModal = ({
 			>
 				Submit
 			</Button>
-		</DefaultModal>
+		</TemplateModal>
 	);
 }
 

@@ -3,13 +3,12 @@ import {
 	Button, Select, MenuItem, InputLabel, FormControl, FormHelperText ,
 	OutlinedInput, InputAdornment
 } from "@mui/material";
-import { useMutation } from "react-query";
-import Cookies from "js-cookie";
+import { useQueryClient } from "react-query";
 
 import GlobalContext from "../../context/globalContext";
-import Axios from "../../services/axiosInstance";
 
-import DefaultModal from "./DefaultModal";
+import TemplateModal from "./TemplateModal";
+import { useEditEntry } from "../../hooks/useMutations";
 
 const EditEntryModal = ({ 
 	open  = false, 
@@ -34,18 +33,15 @@ const EditEntryModal = ({
 		'Other',
 	];
 
-	useEffect(() => {
-		setEditEntry(entry);
-	}, [entry]);
-
 	const resetAndClose = () => {
+		setEditEntry({});
 		setError({});
 		handleCloseEditEntry();
 	}
 
 	const handleSubmit = async () => {
 		if(!validateForm())return;
-		editMutation.mutate();
+		editMutation.mutate(entries, resetAndClose, setEntries);
 	};
 	
 	const validateForm = () => {
@@ -60,30 +56,36 @@ const EditEntryModal = ({
 		return true;
 	}
 
-	const editMutation = useMutation(() =>
-	Axios.patch('/entry',	
-	{
-		...editEntry, 
-		value: parseInt(editEntry.value), 
-	}, 
-	{
-		headers: { Authorization: `Bearer ${Cookies.get('UserToken')}` }
-	}),
-	{
-		onSuccess: (data) => {
-			if(data.data.success){
-				setEntries((prev) => prev.map((n) => (n.id === editEntry.id ? data.data.data.data : n)))
-				resetAndClose();
-			}
-		},
-		onError: (error) => {
-			console.log(error);
-			resetAndClose();
-		},
-	});
+	useEffect(() => {
+		console.log("Edit entry updated:", entry);
+		setEditEntry(entry);
+	}, [entry]);
+
+	const editMutation = useEditEntry(resetAndClose, setEntries, useQueryClient());
+	// const editMutation = useMutation(() =>
+	// Axios.patch('/entry',	
+	// {
+	// 	...editEntry, 
+	// 	value: parseInt(editEntry.value), 
+	// }, 
+	// {
+	// 	headers: { Authorization: `Bearer ${Cookies.get('UserToken')}` }
+	// }),
+	// {
+	// 	onSuccess: (data) => {
+	// 		if(data.data.success){
+	// 			setEntries((prev) => prev.map((n) => (n.id === editEntry.id ? data.data.data.data : n)))
+	// 			resetAndClose();
+	// 		}
+	// 	},
+	// 	onError: (error) => {
+	// 		console.log(error);
+	// 		resetAndClose();
+	// 	},
+	// });
 
 	return (
-		<DefaultModal
+		<TemplateModal
 			open={open}
 			title={'Edit '+label}
 			handleClose={resetAndClose}
@@ -92,25 +94,25 @@ const EditEntryModal = ({
 			<FormControl fullWidth error={!!error.name}>
 				<InputLabel>Name</InputLabel>
 				<OutlinedInput
-					value={editEntry.name}
+					value={editEntry.name || ""}
 					label="Name"
 					placeholder={"Type your "+label+"'s name"}
 					onChange={(e) => setEditEntry({...editEntry, name: e.target.value})}/>
 					<FormHelperText>
-					{(!!error.name) ? error.name : ''}
+					{error.name || ""}
 				</FormHelperText>
 			</FormControl>	
 
 			<FormControl fullWidth error={!!error.value}>
 				<InputLabel>Value</InputLabel>
 				<OutlinedInput
-					value={editEntry.value}
+					value={editEntry.value || ""}
 					label="Value"
 					placeholder={"Type the value of your "+label}
 					onChange={(e) => setEditEntry({...editEntry, value: e.target.value})}
-					endAdornment={<InputAdornment position="end">THB</InputAdornment>}/>
+					endAdornment={<InputAdornment position="end">€</InputAdornment>}/>
 					<FormHelperText>
-					{(!!error.value) ? error.value : ''}
+					{error.value || ""}
 				</FormHelperText>
 			</FormControl>	
 
@@ -118,7 +120,7 @@ const EditEntryModal = ({
 				<InputLabel id="category">Category</InputLabel>
 				<Select
 					labelId="category"
-					value={editEntry.category}
+					value={editEntry.category || ""}
 					label="Category"
 					onChange={(e) => setEditEntry({...editEntry, category: e.target.value})}> 
 					{(label === 'asset') ? 
@@ -130,7 +132,7 @@ const EditEntryModal = ({
 					<></>}
 				</Select>
 				<FormHelperText>
-					{(!!error.category) ? error.category : ''}
+					{error.category || ""}
 				</FormHelperText>
 			</FormControl>
 			
@@ -140,7 +142,7 @@ const EditEntryModal = ({
 				onClick={handleSubmit}>
 				Edit
 			</Button>
-		</DefaultModal>
+		</TemplateModal>
 	);
 }
 

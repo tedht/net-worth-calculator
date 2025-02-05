@@ -6,6 +6,7 @@ import GlobalContext from "../context/globalContext";
 import Axios from "../services/axiosInstance";
 import Cookies from "js-cookie";
 import { useQuery } from "react-query";
+import SearchTable from "../components/tables/SearchTable";
 
 function Search() {
   const { entries, user } = useContext(GlobalContext);
@@ -85,14 +86,9 @@ function Search() {
 
     <Grid item md={1} display={{ xs: 'none', md: 'block'}}/>
 
-    <Grid item md={10} xs={12}>
-      <SearchCard 
-        filteredEntries={filteredEntries}
-        setFilter={setFilter}
-        search={search}
-        setSearch={setSearch}
-        setLabel={setLabel}/>
-    </Grid>
+	<Grid item lg={10} xs={12}>
+      <SearchTable/>
+    </Grid> 
 
       <Grid item md={1} display={{ xs: 'none', md: 'block'}}/>
     </Grid>

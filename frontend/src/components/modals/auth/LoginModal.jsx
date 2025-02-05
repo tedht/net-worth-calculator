@@ -3,7 +3,7 @@ import { TextField, Button } from "@mui/material";
 
 import GlobalContext from "../../../context/globalContext";;
 
-import DefaultModal from "../DefaultModal";
+import TemplateModal from "../TemplateModal";
 
 import { useLogin } from "../../../hooks/useMutations";
 
@@ -55,10 +55,10 @@ const LoginModal = ({
 
 	const handleLogin = () => {
 		if(!validateForm()) return;
-		loginMutation.mutate(email, password);
+		loginMutation.mutate({ email, password });
 	};
 
-	const loginMutation = useLogin(setUser, resetAndClose, setEntries, setPassword);
+	const loginMutation = useLogin(resetAndClose, setUser, setEntries, setPassword, setEmailError);
 
 	const handleCreateAccount = () => {
 		handleCloseLogin(); 
@@ -66,7 +66,7 @@ const LoginModal = ({
 	}
 
 	return (
-		<DefaultModal open={open} title="Login" handleClose={resetAndClose}>
+		<TemplateModal open={open} title="Login" handleClose={resetAndClose}>
 
 		{/* Email */}
 		<TextField							
@@ -104,7 +104,7 @@ const LoginModal = ({
 			Create Account
 		</Button>
 
-		</DefaultModal>
+		</TemplateModal>
 	);
 }
 

@@ -1,16 +1,14 @@
 import { useState, useContext, useEffect } from "react";
-import { Modal, Card, CardContent, Box, Typography, IconButton, Button } from "@mui/material";
-import { useMutation } from "react-query";
-import Cookies from "js-cookie";
+import { Box, Typography, Button } from "@mui/material";
+import { useQueryClient } from "react-query";
 
 import GlobalContext from "../../context/globalContext";
-import Axios from "../../services/axiosInstance";
 
-import DefaultModal from "./DefaultModal";
+import TemplateModal from "./TemplateModal";
+import { useDeleteEntry } from "../../hooks/useMutations";
 
 const DeleteEntryModal = ({ 
 	open  = false, 
-	label = '',
 	entry = {}, 
 	handleCloseDeleteEntry = () => {}
 }) => {
@@ -18,36 +16,20 @@ const DeleteEntryModal = ({
 
 	const { entries, setEntries } = useContext(GlobalContext);
 
+
 	useEffect(() => {
-		setDeleteEntry(entry)
+		console.log("Delete entry updated:", entry);
+		setDeleteEntry(entry);
 	}, [entry]);
 
-
 	const handleSubmit = async () => {
-		deleteMutation.mutate();
+		deleteMutation.mutate(deleteEntry);
 	};
 
-	const deleteMutation = useMutation(() =>
-	Axios.delete('/entry', 
-	{
-		data: {entryid: deleteEntry.id },
-		headers: { Authorization: `Bearer ${Cookies.get('UserToken')}` }
-	}),
-	{
-		onSuccess: (data) => {
-			if(data.data.success){
-				setEntries(entries.filter((item) => item.id !== entry.id));
-				handleCloseDeleteEntry();
-			}
-		},
-		onError: (error) => {
-			console.log(error);
-			handleCloseDeleteEntry();
-		},
-	});
+	const deleteMutation = useDeleteEntry(handleCloseDeleteEntry, setEntries, useQueryClient());
 
 	return (
-		<DefaultModal
+		<TemplateModal
 			open={open}
 			title={'Delete '+entry}
 			handleClose={handleCloseDeleteEntry}
@@ -71,7 +53,7 @@ const DeleteEntryModal = ({
 					No
 				</Button>
 			</Box>
-		</DefaultModal>
+		</TemplateModal>
 	);
 }
 

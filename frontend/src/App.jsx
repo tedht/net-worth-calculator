@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Box } from "@mui/material";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import GlobalContext from './context/globalContext';
@@ -23,6 +23,10 @@ const App = () => {
 			entries,
 			setEntries,
 		};
+	}, [user, entries]);
+
+	useEffect(() => {
+		setEntries(entries);
 	}, [user, entries]);
 
 	return (

@@ -1,16 +1,17 @@
 import { Button } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
-const NavBarButton = ({ text, link }) => {
+const MenuBarButton = ({ text, link }) => {
     return (
         <Button 
             component={NavLink} 
             to={link} 
             sx={{
+				display: 'flex',
+				width: '100%',
+				height: '64px',
 				backgroundColor: 'primary.main',
 				color: 'contrastText.main',
-				mx: '4px',
-				p: '8px 32px',
 				textTransform: 'none',
 				'&:hover': {
 					backgroundColor: 'primary.light',
@@ -27,4 +28,4 @@ const NavBarButton = ({ text, link }) => {
     );
 }
 
-export default NavBarButton;
+export default MenuBarButton;

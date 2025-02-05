@@ -20,11 +20,43 @@
   "entries": [
     {
       "id": "3b3b",
-	  "name": "Honda Civic",
+      "name": "Honda Civic",
       "value": 1000,
       "category": "Car",
-      "userId": "9f5f",
-      "type": "Asset"
+      "type": "Asset",
+      "userId": "9f5f"
+    },
+    {
+      "id": "94f1",
+      "name": "Debt 1",
+      "value": "500000",
+      "category": "Debt",
+      "type": "Liability",
+      "userId": "9f5f"
+    },
+    {
+      "id": "539e",
+      "name": "Debt 2",
+      "value": "500000",
+      "category": "Debt",
+      "type": "Liability",
+      "userId": "9f5f"
+    },
+    {
+      "id": "4789",
+      "name": "House",
+      "value": "50",
+      "category": "Real estate",
+      "type": "Asset",
+      "userId": "9f5f"
+    },
+    {
+      "id": "a41d",
+      "name": "Money",
+      "value": "2",
+      "category": "Other",
+      "type": "Asset",
+      "userId": "9f5f"
     }
   ]
 }

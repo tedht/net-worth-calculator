@@ -68,7 +68,7 @@ Response
 |id|int| user's id
 |firstname|String| user's firstname
 |lastname|String| user's lastname
-|dateofbirth|Date| user's date of birth|
+|dateOfBirth|Date| user's date of birth|
 
 Example
 ```
@@ -77,7 +77,7 @@ Example
    "email" : "tedherambert@email.com",
    "firstname" : "Ted",
    "lastname" : "Herambert",
-   "dateofbirth" : "2004-10-09",
+   "dateOfBirth" : "2004-10-09",
 }
 
 ```
@@ -94,7 +94,7 @@ Example
 |password|String| user's password|
 |firstname|String| user's firstname
 |lastname|String| user's lastname
-|dateofbirth|Date| user's date of birth|
+|dateOfBirth|Date| user's date of birth|
 
 
 Example
@@ -104,7 +104,7 @@ Example
      "password" : "Password123",
      "firstname" : "Ted",
      "lastname" : "Herambert",
-     "dateofbirth" : "2004-10-09",
+     "dateOfBirth" : "2004-10-09",
    }
 
 ```
@@ -136,7 +136,7 @@ Response
 |id|int| user's id
 |firstname|String| user's firstname
 |lastname|String| user's lastname
-|dateofbirth|Date| user's date of birth|
+|dateOfBirth|Date| user's date of birth|
 
 Example
 ```
@@ -145,7 +145,7 @@ Example
    "email" : "tedherambert@email.com",
    "firstname" : "Ted",
    "lastname" : "Herambert",
-   "dateofbirth" : "2004-10-09",
+   "dateOfBirth" : "2004-10-09",
 }
 
 ```

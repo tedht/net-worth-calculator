@@ -10,38 +10,40 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import GlobalContext from '../../context/globalContext';
 import { StyledTableCell, StyledTableRow } from '../../styles/tableStyles';
+import { useTheme } from '@emotion/react';
   
-const EntryTable = ({
+const SearchTable = ({
 	label = '',
 	handleOpenAddEntry = (label) => {}, 
 	handleOpenEditEntry = (entry) => {}, 
 	handleOpenDeleteEntry = (entry) => {}, 
 }) => {
 	const { entries, user } = useContext(GlobalContext);
+	const theme = useTheme();
 
 	return (
-	<>
-	<Typography variant='h2' sx={{textAlign: 'center'}} gutterBottom>
-		{(label === 'asset' ? 'Assets' : 'Liabilities')}
-	</Typography>
 	<TableContainer component={Paper}>
 	<Table>
 	<TableHead>
 		<TableRow>
-			<StyledTableCell label={label}>Name</StyledTableCell>
-			<StyledTableCell label={label}>Value</StyledTableCell>
-			<StyledTableCell label={label}>Category</StyledTableCell>
-			<StyledTableCell label={label}></StyledTableCell>
+			<StyledTableCell sx={{width: "20px"}}></StyledTableCell>
+			<StyledTableCell>Name</StyledTableCell>
+			<StyledTableCell>Value</StyledTableCell>
+			<StyledTableCell>Category</StyledTableCell>
+			<StyledTableCell></StyledTableCell>
 		</TableRow>
 	</TableHead>
 	<TableBody>
-		{entries.filter((entry) => entry.type.toLowerCase() === label.toLowerCase()).map((entry) => (
+		{entries.map((entry) => (
 		<StyledTableRow key={entry.name}>
-			<StyledTableCell>
-			{entry.name}
-			</StyledTableCell>
-			<StyledTableCell >{entry.value}</StyledTableCell>
-			<StyledTableCell >{entry.category}</StyledTableCell>
+			<StyledTableCell 
+				sx={{bgcolor: entry.type.toLowerCase() === 'asset' 
+				? theme.palette.custom.asset.main
+				: theme.palette.custom.liability.main}}
+			/>
+			<StyledTableCell>{entry.name}</StyledTableCell>
+			<StyledTableCell>{entry.value}</StyledTableCell>
+			<StyledTableCell>{entry.category}</StyledTableCell>
 			<StyledTableCell align='right'>
 				<IconButton onClick={() => handleOpenEditEntry(label, entry)}>
 					<ModeEditIcon />
@@ -53,7 +55,7 @@ const EntryTable = ({
 		</StyledTableRow>
 		))}
 		<StyledTableRow>
-			<StyledTableCell colSpan={4}>
+			<StyledTableCell colSpan={5}>
 				<Box sx={{display: 'flex', justifyContent: 'center'}}>
 					<Button 
 						variant='contained' 
@@ -70,8 +72,7 @@ const EntryTable = ({
 	</TableBody>
 	</Table>
     </TableContainer>
-	</>
 	);
 }
 	
-export default EntryTable;
+export default SearchTable;
