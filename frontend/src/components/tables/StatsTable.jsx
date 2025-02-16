@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { 
-	Box, Typography, IconButton, Button, Table, TableBody, TableCell, 
-	TableContainer, TableHead, TableRow, Paper 
+	Typography, Table, TableBody, TableContainer, TableHead, TableRow, Paper 
 } from '@mui/material';
 
-import GlobalContext from '../../context/globalContext';
 import { StyledTableCell, StyledTableRow } from '../../styles/tableStyles';
 
+import { useGlobalContext } from '../../hooks/useContexts';
+
 const StatsTable = ({ label = '' }) => {
-	const { entries } = useContext(GlobalContext);
+	const { entries } = useGlobalContext();
 
 	const calculateStats = (entries, label) => {
 		const filteredEntries = entries

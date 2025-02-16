@@ -1,14 +1,14 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { 
 	Button, Select, MenuItem, InputLabel, FormControl, FormHelperText ,
 	OutlinedInput, InputAdornment
 } from "@mui/material";
 import { useQueryClient } from "react-query";
 
-import GlobalContext from "../../context/globalContext";
-
 import TemplateModal from "./TemplateModal";
 import { useEditEntry } from "../../hooks/useMutations";
+
+import { useGlobalContext } from "../../hooks/useContexts";
 
 const EditEntryModal = ({ 
 	open  = false, 
@@ -19,7 +19,7 @@ const EditEntryModal = ({
 	const [editEntry, setEditEntry] = useState(entry);
 	const [error,     setError    ] = useState({});
 
-	const { entries, setEntries } = useContext(GlobalContext);
+	const { entries, setEntries } = useGlobalContext();
 
 	const assetCategories = [
 		'Bank account', 
@@ -41,7 +41,8 @@ const EditEntryModal = ({
 
 	const handleSubmit = async () => {
 		if(!validateForm())return;
-		editMutation.mutate(entries, resetAndClose, setEntries);
+		//editMutation.mutate(entries, resetAndClose, setEntries);
+		editMutation.mutate(editEntry);
 	};
 	
 	const validateForm = () => {

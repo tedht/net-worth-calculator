@@ -1,11 +1,10 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { TextField, Button } from "@mui/material";
-
-import GlobalContext from "../../../context/globalContext";;
 
 import TemplateModal from "../TemplateModal";
 
 import { useLogin } from "../../../hooks/useMutations";
+import { useGlobalContext } from "../../../hooks/useContexts";
 
 const LoginModal = ({ 
 	open = false, 
@@ -17,7 +16,7 @@ const LoginModal = ({
 	const [password,      setPassword     ] = useState('');
 	const [passwordError, setPasswordError] = useState('');
 	
-	const { setUser, setEntries } = useContext(GlobalContext);
+	const { setUser, setEntries } = useGlobalContext();
 
 	const resetAndClose = () => {
 		resetInputs();

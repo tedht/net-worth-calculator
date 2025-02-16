@@ -11,15 +11,15 @@ const MenuBarButton = ({ text, link }) => {
 				width: '100%',
 				height: '64px',
 				backgroundColor: 'primary.main',
-				color: 'contrastText.main',
+				color: 'text.secondary',
 				textTransform: 'none',
 				'&:hover': {
 					backgroundColor: 'primary.light',
-					color: 'contrastText.light'
+					color: 'text.secondary'
 				},
 				'&.active': {
 					backgroundColor: 'primary.active',
-					color: 'contrastText.active'
+					color: 'text.active'
 				},
             }}
         >

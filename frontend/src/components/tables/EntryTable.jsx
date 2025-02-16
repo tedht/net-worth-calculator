@@ -1,4 +1,3 @@
-import { useContext, useEffect } from 'react';
 import { 
 	Box, Typography, IconButton, Button, Table, TableBody, TableCell, 
 	TableContainer, TableHead, TableRow, Paper 
@@ -8,16 +7,21 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import GlobalContext from '../../context/globalContext';
 import { StyledTableCell, StyledTableRow } from '../../styles/tableStyles';
+import { useGlobalContext, useModalContext } from '../../hooks/useContexts';
+
   
-const EntryTable = ({
-	label = '',
-	handleOpenAddEntry = (label) => {}, 
-	handleOpenEditEntry = (entry) => {}, 
-	handleOpenDeleteEntry = (entry) => {}, 
-}) => {
-	const { entries, user } = useContext(GlobalContext);
+const EntryTable = ({ label = ''}) => {
+	const { 
+		entries, 
+		user 
+	} = useGlobalContext();
+
+	const { 
+		handleOpenAddEntry, 
+		handleOpenEditEntry, 
+		handleOpenDeleteEntry
+	} = useModalContext();
 
 	return (
 	<>
@@ -36,10 +40,8 @@ const EntryTable = ({
 	</TableHead>
 	<TableBody>
 		{entries.filter((entry) => entry.type.toLowerCase() === label.toLowerCase()).map((entry) => (
-		<StyledTableRow key={entry.name}>
-			<StyledTableCell>
-			{entry.name}
-			</StyledTableCell>
+		<StyledTableRow key={entry.id || `${entry.name}-${entry.value}`}>
+			<StyledTableCell>{entry.name}</StyledTableCell>
 			<StyledTableCell >{entry.value}</StyledTableCell>
 			<StyledTableCell >{entry.category}</StyledTableCell>
 			<StyledTableCell align='right'>

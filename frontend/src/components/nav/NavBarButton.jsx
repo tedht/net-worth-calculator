@@ -8,17 +8,17 @@ const NavBarButton = ({ text, link }) => {
             to={link} 
             sx={{
 				backgroundColor: 'primary.main',
-				color: 'contrastText.main',
+				color: 'text.secondary',
 				mx: '4px',
 				p: '8px 32px',
 				textTransform: 'none',
 				'&:hover': {
 					backgroundColor: 'primary.light',
-					color: 'contrastText.light'
+					color: 'text.secondary'
 				},
 				'&.active': {
 					backgroundColor: 'primary.active',
-					color: 'contrastText.active'
+					color: 'text.active'
 				},
             }}
         >

@@ -3,8 +3,7 @@ import StatsTable from "../components/tables/StatsTable";
 import DistributionTable from "../components/tables/DistributionTable";
 
 const Stats = () => {
-  
-  return (
+ 	return (
 	<Grid container spacing={2}>
 
 		<Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center'}}>

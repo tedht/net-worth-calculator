@@ -16,7 +16,7 @@ const TemplateModal = ({
 		transform: 'translate(-50%, 0%)',
 		width: { xs: '90%', md: '60%'},
 		border: 2,
-		borderRadius: 5,
+		borderRadius: 2,
 		mt: 2,
 		boxShadow: theme.shadows[10]
 	}

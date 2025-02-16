@@ -45,11 +45,11 @@ const MenuBar = ({
 					<Toolbar sx={toolBarStyle}>
 							
 					<IconButton onClick={handleCloseMenuBar}>
-						<MenuIcon sx={{ color: theme.palette.contrastText.main }}/>
+						<MenuIcon sx={{ color: theme.palette.text.secondary }}/>
 					</IconButton>
 
 					<IconButton onClick={handleCloseMenuBar}>
-						<CloseRoundedIcon sx={{ color: theme.palette.contrastText.main }} />
+						<CloseRoundedIcon sx={{ color: theme.palette.text.secondary }} />
 					</IconButton>
 
 					</Toolbar>

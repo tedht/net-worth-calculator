@@ -1,21 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 import "@fontsource/roboto";
 
-const customColors = {
-	asset: {
-		main: '#2DD881',
-		light: '#5DF5A4',
-		dark: '#1B9B5F',
-		contrastText: '#FFFFFF',
-	},
-	liability: {
-		main: '#FF0022',
-		light: '#FF4455',
-		dark: '#990013',
-		contrastText: '#FFFFFF',
-	}
-};
-
 const theme = createTheme({
 	typography: {
 		h1: {
@@ -66,13 +51,23 @@ const theme = createTheme({
 			dark: '#484848', 
 			active: '#212121',
 		},
-		contrastText: {
-			main: '#F5F5F5',
-			light: '#F5F5F5',
-			dark: '#212121', 
+		text : {
+			primary: '#000000',
+			secondary: '#F0F0F0',
 			active: '#212121',
 		},
-		custom: customColors,
+		custom: {
+			asset: {
+				main: '#2DD881',
+				light: '#5DF5A4',
+				dark: '#1B9B5F',
+			},
+			liability: {
+				main: '#FF0022',
+				light: '#FF4455',
+				dark: '#990013',
+			}
+		},
 	},
 	components: {
 		MuiButton: {

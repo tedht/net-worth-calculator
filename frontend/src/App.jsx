@@ -1,50 +1,35 @@
-import { useState, useMemo, useEffect } from 'react';
-import { Box } from "@mui/material";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import GlobalContext from './context/globalContext';
-import { QueryClientProvider, QueryClient } from 'react-query';
+
+import { Box, Typography, useTheme } from "@mui/material";
+import { Routes, Route } from 'react-router-dom';
+import GlobalContextProvider from './context/GlobalContextProvider';
+import ModalContextProvider from "./context/ModalContextProvider";
 
 import NavBar from "./components/nav/NavBar";
-import Homepage from './pages/Homepage';
-import Stats from "./pages/Stats";
+import Home   from './pages/Home';
+import Stats  from "./pages/Stats";
 import Search from "./pages/Search";
-import Error from "./pages/Error";
+import Error  from "./pages/Error";
 
 const App = () => {
-	const [user,    setUser]    = useState();
-	const [entries, setEntries] = useState([]);
-	
-	const [queryClient] = useState(() => new QueryClient());
-	
-	const globalContextValue = useMemo(() => {
-		return {
-			user,
-			setUser,
-			entries,
-			setEntries,
-		};
-	}, [user, entries]);
-
-	useEffect(() => {
-		setEntries(entries);
-	}, [user, entries]);
-
 	return (
-		<BrowserRouter>
-		<GlobalContext.Provider value={globalContextValue}>
-		<QueryClientProvider client={queryClient}>
+		<GlobalContextProvider>
+		<ModalContextProvider>
 		<NavBar />
-		<Box sx={{p: 2}}>
-			<Routes>
-				<Route path="/"       element={ <Homepage /> }/>
-				<Route path="/stats"  element={ <Stats    /> }/>
-				<Route path="/search" element={ <Search   /> }/>
-				<Route path="*"       element={ <Error    /> }/>
-			</Routes>
+		<Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+			<Box sx={{p: 2, flexGrow: 1}}>
+				<Routes>
+					<Route path="/"       element={ <Home /> }/>
+					<Route path="/stats"  element={ <Stats    /> }/>
+					<Route path="/search" element={ <Search   /> }/>
+					<Route path="*"       element={ <Error    /> }/>
+				</Routes>
+			</Box> 
+			<Box sx={{ bgcolor: 'primary.main', mt: 8, boxShadow: useTheme().shadows[10]  }}>
+			<Typography variant='body1' color="secondary" sx={{textAlign: 'center' }}>© 2025 Ted Herambert</Typography>
+			</Box>
 		</Box>
-		</QueryClientProvider> 
-		</GlobalContext.Provider>
-		</BrowserRouter>
+		</ModalContextProvider>
+		</GlobalContextProvider>
 	);
 }
 

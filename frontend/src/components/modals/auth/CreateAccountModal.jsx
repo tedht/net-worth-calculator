@@ -1,7 +1,5 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Box, Typography, TextField, Button, Checkbox, FormControl, FormHelperText } from "@mui/material";
-
-import GlobalContext from '../../../context/globalContext';
 
 import TemplateModal from "../TemplateModal";
 
@@ -12,6 +10,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import { useCreateAccount } from "../../../hooks/useMutations";
+import { useGlobalContext } from "../../../hooks/useContexts";
 
 const CreateAccountModal = ({ 
 	open = false, 
@@ -36,7 +35,7 @@ const CreateAccountModal = ({
 	const [newUser,          setNewUser       ]   = useState({});
 	const [newUserErrors,    setNewUserErrors ]   = useState({});
 
-	const { setUser } = useContext(GlobalContext);
+	const { setUser } = useGlobalContext();
 
 	const handleNewDateOfBirth = (event) => {
 		setInputDateOfBirth(event);

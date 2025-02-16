@@ -1,14 +1,14 @@
-import { useState, useContext } from "react";
+import { useState} from "react";
 import { 
 	Button, Select, MenuItem, InputLabel, FormControl, FormHelperText ,
 	OutlinedInput, InputAdornment
 } from "@mui/material";
 import { useQueryClient } from "react-query";
 
-import GlobalContext from "../../context/globalContext";
-
 import TemplateModal from "./TemplateModal";
 import { useAddEntry } from "../../hooks/useMutations";
+
+import { useGlobalContext } from "../../hooks/useContexts";
 
 const AddEntryModal = ({ 
 	open  = false, 
@@ -22,7 +22,7 @@ const AddEntryModal = ({
 	});
 	const [error, setError] = useState({});
 
-	const { entries, setEntries, user } = useContext(GlobalContext);
+	const { setEntries, user } = useGlobalContext();
 
 	const assetCategories = [
 		'Bank account', 

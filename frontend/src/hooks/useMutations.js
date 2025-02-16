@@ -15,6 +15,7 @@ export const useCreateAccount = (resetAndClose, setUser, setPassword, setRePassw
 				dateOfBirth: user.dateOfBirth,
 				id: user.id,
 			});
+			Cookies.set('UserToken', user.id, { expires: 7 });
 			resetAndClose();
 		},
 		onError: (error) => {
@@ -43,7 +44,7 @@ export const useLogin = (resetAndClose, setUser, setEntries, setPassword, setEma
 				dateOfBirth: user.dateOfBirth,
 				id: user.id,
 			})
-			Cookies.set('UserId', user.id);
+			Cookies.set('UserToken', user.id, { expires: 7 });
 
 			try {
 				const entriesResponse = await Axios.get(`/entries?userId=${user.id}`);
@@ -78,9 +79,10 @@ export const useAddEntry = (resetAndClose, setEntries, queryClient) => {
 	});
 };
 
-export const useEditEntry = (setEntries, queryClient) => {
+export const useEditEntry = (resetAndClose, setEntries, queryClient) => {
 	return useMutation(editEntry, {
 		onSuccess: (data) => {
+			console.log(data);
 			queryClient.invalidateQueries();
 			const modifiedEntry = data.data;
 			setEntries((prev) => prev.map((entry) => (entry.id === modifiedEntry.id ? modifiedEntry : entry)));

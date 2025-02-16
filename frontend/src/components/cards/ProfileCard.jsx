@@ -1,20 +1,27 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Card, CardContent, Typography, useTheme } from "@mui/material";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import GlobalContext from "../../context/globalContext";
 import dayjs from 'dayjs';
+import { useGlobalContext } from "../../hooks/useContexts";
 
 const ProfileCard = () => {
 	const [netWorth, setNetWorth] = useState(0);
 	const [age,      setAge     ] = useState(0);
 
-	const { entries, user } = useContext(GlobalContext);
+	const { entries, user } = useGlobalContext();
 
 	const calculateNetworth = (entries) => {
-		return 0;
+		let assetsTotalValue = 0;
+		let liabilitiesTotalValue = 0;
+
+		entries.map((entry) => {
+			if(entry.type.toLowerCase()==='asset') assetsTotalValue += Number(entry.value);
+			else if(entry.type.toLowerCase()==='liability') liabilitiesTotalValue += Number(entry.value);
+		});
+		return (assetsTotalValue - liabilitiesTotalValue);
 	} 
 
-	const calculateAge = () => {
+	const getAge = () => {
 		if(!user) return;
 
 		let dob = user.dateOfBirth;
@@ -38,17 +45,18 @@ const ProfileCard = () => {
 	}
 
 	useEffect(() => {
-		setNetWorth(calculateNetworth())
+		setNetWorth(calculateNetworth(entries))
+		console.log(calculateNetworth(entries));
 	}, [entries]);
 	
 	useEffect(() => {
-		setAge(calculateAge());
+		setAge(getAge());
 	}, [user]);
 
 	const theme = useTheme();
 
 	const profileCardStyle = {
-		borderRadius: 4,
+		borderRadius: 2,
 		boxShadow: theme.shadows[10],
 	}
 
@@ -84,11 +92,15 @@ const ProfileCard = () => {
 							m: 1,
 							mt: 3,
 							mb: 5}}>
-					<Typography variant="h1">
+					<Typography variant="h2">
 						Net Worth:
 					</Typography>
-					<Typography variant="h1">
-						{netWorth+" €"}
+					<Typography variant="h2">
+					{netWorth <= -1_000_000_000_000 
+					? "-999999999999+ €" 
+					: netWorth >= 1_000_000_000_000 
+					? "999999999999+ €" 
+					: `${netWorth} €`}
 					</Typography>
 				</Box>
 

@@ -1,11 +1,11 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { useQueryClient } from "react-query";
 
-import GlobalContext from "../../context/globalContext";
-
 import TemplateModal from "./TemplateModal";
 import { useDeleteEntry } from "../../hooks/useMutations";
+
+import { useGlobalContext } from "../../hooks/useContexts";
 
 const DeleteEntryModal = ({ 
 	open  = false, 
@@ -14,7 +14,7 @@ const DeleteEntryModal = ({
 }) => {
 	const [deleteEntry, setDeleteEntry] = useState(entry);
 
-	const { entries, setEntries } = useContext(GlobalContext);
+	const { entries, setEntries } = useGlobalContext();
 
 
 	useEffect(() => {
