@@ -1,0 +1,62 @@
+{
+  "users": [
+    {
+      "id": "9f5f",
+      "firstname": "Ted",
+      "lastname": "Herambert",
+      "dateOfBirth": "2025-01-19",
+      "email": "tedht@mail.com",
+      "password": "Bidon123"
+    },
+    {
+      "id": "c110",
+      "firstname": "John",
+      "lastname": "Doe",
+      "dateOfBirth": "2025-01-31",
+      "email": "johndoe@mail.com",
+      "password": "Password123"
+    }
+  ],
+  "entries": [
+    {
+      "id": "3b3b",
+      "name": "Honda Civic",
+      "value": "2000",
+      "category": "Car",
+      "type": "Asset",
+      "userId": "9f5f"
+    },
+    {
+      "id": "94f1",
+      "name": "Debt 1",
+      "value": "500000",
+      "category": "Debt",
+      "type": "Liability",
+      "userId": "9f5f"
+    },
+    {
+      "id": "539e",
+      "name": "Debt 2",
+      "value": "500000",
+      "category": "Debt",
+      "type": "Liability",
+      "userId": "9f5f"
+    },
+    {
+      "id": "4789",
+      "name": "House",
+      "value": "50",
+      "category": "Real estate",
+      "type": "Asset",
+      "userId": "9f5f"
+    },
+    {
+      "id": "2419",
+      "name": "House 2",
+      "value": "200",
+      "category": "Real estate",
+      "type": "Asset",
+      "userId": "9f5f"
+    }
+  ]
+}
