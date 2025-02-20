@@ -7,7 +7,7 @@ export const useCreateAccount = (resetAndClose, setUser, setPassword, setRePassw
   	return useMutation(createAccount, {
 		onSuccess: (data) => {
 			console.log(data);
-			const user = data.data[0];
+			const user = data.data;
 			setUser({
 				firstname: user.firstname,
 				lastname: user.lastname,

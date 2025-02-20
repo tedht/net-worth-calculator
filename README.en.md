@@ -13,7 +13,9 @@
 calculate their net worth (Difference between the total value of their assets and the 
 total value of their liabilities). 
 
-Uses are able to create an account or log into an existing, and add, edit or delete entries (assets or laibilities).
+The application has a responsive interface that automatically adapts to different screen sizes.
+
+Users are able to create an account or log into an existing, and add, edit or delete entries (assets or laibilities).
 
 There is also a Stats page that allow the user to view statistics concerning their assets and liabilities (mean, median, proportions...) as well as a Search page allowing them to search for specific entries and sort them depending on their name, value, category and type (asset or liability). 
 
