@@ -17,6 +17,9 @@ Uses are able to create an account or log into an existing, and add, edit or del
 
 There is also a Stats page that allow the user to view statistics concerning their assets and liabilities (mean, median, proportions...) as well as a Search page allowing them to search for specific entries and sort them depending on their name, value, category and type (asset or liability). 
 
+This version of the application does not have a working database. Instead, json-server is used, 
+which uses a JSON file to simulate a database.
+
 ## System Requirements
 
 To run this application, ensure your system meets the following requirements:

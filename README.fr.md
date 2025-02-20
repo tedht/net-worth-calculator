@@ -14,6 +14,10 @@ Les utilisateurs peuvent créer un compte ou se connecter à un compte existant 
 
 Il existe également une page Statistiques qui permet aux utilisateurs de visualiser des statistiques concernant leurs actifs et passifs (moyenne, médiane, proportions...) ainsi qu'une page de Recherche leur permettant de rechercher des entrées spécifiques et de les trier en fonction de leur nom, valeur, catégorie et type (actif ou passif).
 
+Cette version de l'application ne possède pas une base de données fonctionnelles. 
+
+Cette version de l'application ne dispose pas d'une base de données fonctionnelle. À la place, json-server est utilisé, ce qui permet de simuler une base de données à l'aide d'un fichier JSON.
+
 ## System Requirements
 
 Pour exécuter cette application, assurez-vous que votre système répond aux exigences suivantes :
